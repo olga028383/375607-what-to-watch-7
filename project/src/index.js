@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+
 import films from './mocks/films.js';
 import comments from './mocks/comments.js';
 

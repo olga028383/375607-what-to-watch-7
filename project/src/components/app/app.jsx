@@ -11,10 +11,11 @@ import Review from '../pages/review/review';
 import Player from '../pages/player/player';
 import NotFound from '../not-found/not-found';
 
-import films from '../../mocks/films';
 import filmProp from '../film/film.prop.js';
 
-function App() {
+function App(props) {
+  const {films} = props;
+
   return (
     <BrowserRouter>
       <Switch>
