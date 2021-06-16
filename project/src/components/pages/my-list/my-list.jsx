@@ -62,7 +62,7 @@ function MyList(props) {
 }
 
 MyList.propTypes = {
-  films: PropTypes.arrayOf(filmProp).isRequired
+  films: PropTypes.arrayOf(filmProp).isRequired,
 };
 
 export default MyList;

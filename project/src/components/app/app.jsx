@@ -33,9 +33,7 @@ function App() {
           <MyList films={films}/>
         </Route>
         <Route exact path={AppRoute.FILM_DETAIL}>
-          <FilmDetail
-            film={films[0]}
-          />
+          <FilmDetail />
         </Route>
         <Route exact path={AppRoute.REVIEW}>
           <Review/>

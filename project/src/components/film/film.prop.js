@@ -8,7 +8,7 @@ export default PropTypes.shape({
   backgroundImage: PropTypes.string.isRequired,
   backgroundColor: PropTypes.string.isRequired,
   videoLink: PropTypes.string.isRequired,
-  previewVideo_link: PropTypes.string.isRequired,
+  previewVideoLink: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   scoresCount: PropTypes.number.isRequired,
   director: PropTypes.string.isRequired,

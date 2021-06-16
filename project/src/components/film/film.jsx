@@ -19,7 +19,7 @@ function Film(props) {
 }
 
 filmProp.propTypes = {
-  film: filmProp
+  film: filmProp,
 };
 
 export default Film;

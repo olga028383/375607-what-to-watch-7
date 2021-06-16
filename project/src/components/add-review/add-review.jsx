@@ -10,12 +10,9 @@ function FormReview() {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-
-    console.log('111');
   }
 
   function handleTextChange() {
-    console.log(comment);
     setData({
       ...data,
       comment: comment
