@@ -105,7 +105,7 @@ function Home(props) {
             {films.map((film, id) => {
               const keyValue = `${id}-${film.posterImage}`;
 
-              return <Film key={keyValue} film={film}/>
+              return <Film key={keyValue} film={film}/>;
             })}
           </div>
 
@@ -136,7 +136,7 @@ Home.propTypes = {
   name: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   date: PropTypes.number.isRequired,
-  films: PropTypes.arrayOf(filmProp).isRequired
+  films: PropTypes.arrayOf(filmProp).isRequired,
 };
 
 export default Home;

@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import filmProp from '../../film/film.prop.js';
@@ -6,7 +6,6 @@ import Film from '../../film/film';
 
 function MyList(props) {
   const {films} = props;
-  const [activeFilm, setActiveFilm] = useState(0);
 
   return (
     <div className="user-page">
@@ -40,7 +39,7 @@ function MyList(props) {
           {films.map((film, id) => {
             const keyValue = `${id}-${film.posterImage}`;
 
-            return <Film key={keyValue} film={film} />
+            return <Film key={keyValue} film={film}/>;
           })}
         </div>
       </section>

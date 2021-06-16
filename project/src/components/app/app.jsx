@@ -11,7 +11,7 @@ import Review from '../pages/review/review';
 import Player from '../pages/player/player';
 import NotFound from '../not-found/not-found';
 
-import films from "../../mocks/films";
+import films from '../../mocks/films';
 import filmProp from '../film/film.prop.js';
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
           <MyList films={films}/>
         </Route>
         <Route exact path={AppRoute.FILM_DETAIL}>
-          <FilmDetail />
+          <FilmDetail/>
         </Route>
         <Route exact path={AppRoute.REVIEW}>
           <Review/>
