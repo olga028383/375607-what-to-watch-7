@@ -6,5 +6,6 @@ const AppRoute = {
   REVIEW: '/films/:id/review',
   PLAYER: '/player/:id',
 };
+const COUNT_FILMS_LIST = 19;
 
-export {AppRoute};
+export {AppRoute, COUNT_FILMS_LIST};

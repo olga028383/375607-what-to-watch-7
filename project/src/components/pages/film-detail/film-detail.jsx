@@ -1,4 +1,5 @@
 import React from 'react';
+import filmProp from '../../film/film.prop.js';
 
 function FilmDetail() {
   return (
@@ -164,5 +165,9 @@ function FilmDetail() {
     </React.Fragment>
   );
 }
+
+FilmDetail.propTypes = {
+  film: filmProp,
+};
 
 export default FilmDetail;

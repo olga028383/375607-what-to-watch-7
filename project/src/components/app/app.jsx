@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute} from '../../constants.js';
 import Home from '../pages/home/home';
@@ -8,6 +10,9 @@ import SingIn from '../pages/sing-in/sing-in';
 import Review from '../pages/review/review';
 import Player from '../pages/player/player';
 import NotFound from '../not-found/not-found';
+
+import films from "../../mocks/films";
+import filmProp from '../film/film.prop.js';
 
 function App() {
   return (
@@ -21,13 +26,16 @@ function App() {
             name={'The Grand Budapest Hotel'}
             genre={'Drama'}
             date={2014}
+            films={films}
           />
         </Route>
         <Route exact path={AppRoute.MY_LIST}>
-          <MyList/>
+          <MyList films={films}/>
         </Route>
         <Route exact path={AppRoute.FILM_DETAIL}>
-          <FilmDetail/>
+          <FilmDetail
+            film={films[0]}
+          />
         </Route>
         <Route exact path={AppRoute.REVIEW}>
           <Review/>
@@ -42,5 +50,9 @@ function App() {
     </BrowserRouter>
   );
 }
+
+App.propTypes = {
+  films: PropTypes.arrayOf(filmProp).isRequired,
+};
 
 export default App;
