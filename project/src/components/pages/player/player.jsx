@@ -1,9 +1,14 @@
 import React from 'react';
 
-function Player() {
+import filmProp from '../../film/film.prop.js';
+
+function Player(props) {
+  const {film} = props;
+  const {previewVideoLink} = film;
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={previewVideoLink} className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -37,4 +42,7 @@ function Player() {
   );
 }
 
+Player.propTypes = {
+  film: filmProp,
+};
 export default Player;

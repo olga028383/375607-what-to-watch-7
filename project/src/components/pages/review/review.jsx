@@ -1,12 +1,17 @@
 import React from 'react';
 import FormReview from '../../add-review/add-review';
 
-function Review() {
+import filmProp from '../../film/film.prop.js';
+
+function Review(props) {
+  const {film} = props;
+  const {name, posterImage, backgroundImage} = film;
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+          <img src={backgroundImage} alt={name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -44,16 +49,20 @@ function Review() {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+          <img src={posterImage} alt={`${name} poster`} width="218" height="327"/>
         </div>
       </div>
 
       <div className="add-review">
-        <FormReview />
+        <FormReview/>
       </div>
 
     </section>
   );
 }
+
+Review.propTypes = {
+  film: filmProp,
+};
 
 export default Review;

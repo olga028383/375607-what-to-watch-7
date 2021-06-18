@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+
 import {AppRoute} from '../../constants.js';
 import Home from '../pages/home/home';
 import MyList from '../pages/my-list/my-list';
@@ -15,7 +15,6 @@ import filmProp from '../film/film.prop.js';
 
 function App(props) {
   const {films} = props;
-
   return (
     <BrowserRouter>
       <Switch>
@@ -36,11 +35,17 @@ function App(props) {
         <Route exact path={AppRoute.FILM_DETAIL}>
           <FilmDetail/>
         </Route>
-        <Route exact path={AppRoute.REVIEW}>
-          <Review/>
+        <Route
+          exact
+          path={AppRoute.REVIEW}
+          render={({match}) => <Review film={films[match.params.id]}/>}
+        >
         </Route>
-        <Route exact path={AppRoute.PLAYER}>
-          <Player/>
+        <Route
+          exact
+          path={AppRoute.PLAYER}
+          render={({match}) => <Player film={films[match.params.id]}/>}
+        >
         </Route>
         <Route>
           <NotFound/>

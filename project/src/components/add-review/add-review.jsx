@@ -3,7 +3,7 @@ import RatingField from './rating-field/rating-field.jsx';
 
 function FormReview() {
   const [data, setData] = useState({
-    rating: '',
+    rating: 0,
     comment: '',
   });
 
@@ -21,11 +21,9 @@ function FormReview() {
   }
 
   function onRatingChange(evt) {
-    evt.preventDefault();
-
     setData({
       ...data,
-      rating: evt.target.value,
+      rating: Number(evt.target.value),
     });
   }
 
@@ -36,7 +34,7 @@ function FormReview() {
 
           {new Array(10).fill(null).map((element, index) => {
             const keyValue = `${index}-${element}`;
-            return <RatingField index={index + 1} value={rating} handleRatingChange={onRatingChange} key={keyValue}/>;
+            return <RatingField index={10 - index} value={rating} handleRatingChange={onRatingChange} key={keyValue}/>;
           })}
 
         </div>
