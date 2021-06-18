@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import RatingField from './rating-field/rating-field.jsx';
 
+import {COUNT_RATING} from '../../constants.js';
+
 function FormReview() {
   const [data, setData] = useState({
     rating: 0,
@@ -32,9 +34,9 @@ function FormReview() {
       <div className="rating">
         <div className="rating__stars">
 
-          {new Array(10).fill(null).map((element, index) => {
+          {new Array(COUNT_RATING).fill(null).map((element, index) => {
             const keyValue = `${index}-${element}`;
-            return <RatingField index={10 - index} value={rating} handleRatingChange={onRatingChange} key={keyValue}/>;
+            return <RatingField index={COUNT_RATING - index} value={rating} handleRatingChange={onRatingChange} key={keyValue}/>;
           })}
 
         </div>

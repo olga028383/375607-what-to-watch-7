@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function RatingField(props) {
-  /*Здесь проблема в том, что value в обратном порядке и при этом клик 10 раз отрабатывает, почему так происходит*/
   const {index, value, handleRatingChange} = props;
 
   return (
