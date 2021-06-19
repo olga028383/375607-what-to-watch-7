@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+
 import {AppRoute} from '../../constants.js';
 import Home from '../pages/home/home';
 import MyList from '../pages/my-list/my-list';
@@ -9,7 +11,10 @@ import Review from '../pages/review/review';
 import Player from '../pages/player/player';
 import NotFound from '../not-found/not-found';
 
-function App() {
+import filmProp from '../film/film.prop.js';
+
+function App(props) {
+  const {films} = props;
   return (
     <BrowserRouter>
       <Switch>
@@ -21,19 +26,26 @@ function App() {
             name={'The Grand Budapest Hotel'}
             genre={'Drama'}
             date={2014}
+            films={films}
           />
         </Route>
         <Route exact path={AppRoute.MY_LIST}>
-          <MyList/>
+          <MyList films={films}/>
         </Route>
         <Route exact path={AppRoute.FILM_DETAIL}>
           <FilmDetail/>
         </Route>
-        <Route exact path={AppRoute.REVIEW}>
-          <Review/>
+        <Route
+          exact
+          path={AppRoute.REVIEW}
+          render={({match}) => <Review film={films[match.params.id]}/>}
+        >
         </Route>
-        <Route exact path={AppRoute.PLAYER}>
-          <Player/>
+        <Route
+          exact
+          path={AppRoute.PLAYER}
+          render={({match}) => <Player film={films[match.params.id]}/>}
+        >
         </Route>
         <Route>
           <NotFound/>
@@ -42,5 +54,9 @@ function App() {
     </BrowserRouter>
   );
 }
+
+App.propTypes = {
+  films: PropTypes.arrayOf(filmProp).isRequired,
+};
 
 export default App;

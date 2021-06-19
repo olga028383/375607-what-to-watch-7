@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Film from '../../film/film';
 
-function Home({name, genre, date}) {
+import filmProp from '../../film/film.prop.js';
+import Film from '../../film/film';
+import Footer from '../../footer/footer.jsx';
+
+function Home(props) {
+  const {name, genre, date, films} = props;
   return (
     <React.Fragment>
       <section className="film-card">
@@ -99,8 +103,11 @@ function Home({name, genre, date}) {
           </ul>
 
           <div className="catalog__films-list">
-            {new Array(19).fill(null).map((number, i) => <Film key={i.toString()}/>)}
-            <Film/>
+            {films.map((film, id) => {
+              const keyValue = `${id}-${film.posterImage}`;
+
+              return <Film key={keyValue} film={film}/>;
+            })}
           </div>
 
           <div className="catalog__more">
@@ -108,28 +115,17 @@ function Home({name, genre, date}) {
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </React.Fragment>
   );
 }
 
 Home.propTypes = {
-  name: PropTypes.string,
-  genre: PropTypes.string,
-  date: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  genre: PropTypes.string.isRequired,
+  date: PropTypes.number.isRequired,
+  films: PropTypes.arrayOf(filmProp).isRequired,
 };
 
 export default Home;
