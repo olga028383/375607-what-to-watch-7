@@ -1,11 +1,11 @@
 import React from 'react';
 import filmProp from '../film.prop.js';
 
-function VideoPlayer(props) {
-  const {film} = props;
+function VideoPlayer({film}) {
   const {previewVideoLink, posterImage} = film;
+
   return (
-    <video src={previewVideoLink} className="player__video" poster={posterImage}></video>
+    <video src={previewVideoLink} className="player__video"  poster={posterImage}></video>
   );
 }
 

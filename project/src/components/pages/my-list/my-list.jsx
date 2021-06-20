@@ -1,16 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
 import filmProp from '../../film/film.prop.js';
 import Film from '../../film/film';
 import Footer from '../../footer/footer.jsx';
 
-function MyList(props) {
-  const {films} = props;
+function MyList({films}) {
+  const [activePlayer, setActivePlayer] = useState(null);
 
-  function onVideoChange (evt){
-    console.log(evt.target);
-  }
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -43,7 +40,18 @@ function MyList(props) {
           {films.map((film, id) => {
             const keyValue = `${id}-${film.posterImage}`;
 
-            return <Film key={keyValue} film={film} onVideoChange={onVideoChange}/>;
+            return (
+              <Film
+                key={keyValue}
+                film={film}
+                isPlaying={id === activePlayer}
+                onVideoChange={() => {
+                  setTimeout(() => {
+                    setActivePlayer(id);
+                  }, 2000);
+                }}
+              />
+            );
           })}
         </div>
       </section>
