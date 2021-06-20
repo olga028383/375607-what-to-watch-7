@@ -8,6 +8,9 @@ import Footer from '../../footer/footer.jsx';
 function MyList(props) {
   const {films} = props;
 
+  function onVideoChange (evt){
+    console.log(evt.target);
+  }
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -40,7 +43,7 @@ function MyList(props) {
           {films.map((film, id) => {
             const keyValue = `${id}-${film.posterImage}`;
 
-            return <Film key={keyValue} film={film}/>;
+            return <Film key={keyValue} film={film} onVideoChange={onVideoChange}/>;
           })}
         </div>
       </section>
