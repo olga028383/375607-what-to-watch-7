@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function RatingField(props) {
-  const {index, value, handleRatingChange} = props;
-
+function RatingField({index, value, handleRatingChange}) {
   return (
     <React.Fragment>
       <input className="rating__input" id={`star-${index}`} type="radio" name="rating" value={index} checked={value === index} onChange={handleRatingChange}/>

@@ -11,23 +11,23 @@ function FormReview() {
 
   const {rating, comment} = data;
 
-  function handleSubmit(evt) {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
-  }
+  };
 
-  function handleTextChange(evt) {
+  const handleTextChange = (evt) => {
     setData({
       ...data,
       comment: evt.target.value,
     });
-  }
+  };
 
-  function onRatingChange(evt) {
+  const onRatingChange = (evt) => {
     setData({
       ...data,
       rating: Number(evt.target.value),
     });
-  }
+  };
 
   return (
     <form action="#" className="add-review__form" onSubmit={handleSubmit}>
