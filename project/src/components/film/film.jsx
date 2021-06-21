@@ -26,7 +26,7 @@ function Film({isPlaying, film, onVideoChange}) {
   return (
     <article className="small-film-card catalog__films-card"  onMouseEnter={onVideoChange}>
       <div className="small-film-card__image">
-        {/*<VideoPlayer film={film}/>*/}
+        {/*<VideoPlayer film={film}/>  Здесь не пойму как быть с компонентом, делать подмену на ховер?*/}
         <video src={previewVideoLink} className="player__video" muted ref={elementVideo} poster={posterImage}></video>
       </div>
       <h3 className="small-film-card__title">
