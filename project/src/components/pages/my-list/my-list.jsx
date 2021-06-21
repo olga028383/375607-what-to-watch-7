@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import filmProp from '../../film/film.prop.js';
@@ -6,7 +6,6 @@ import Film from '../../film/film';
 import Footer from '../../footer/footer.jsx';
 
 function MyList({films}) {
-  const [activePlayer, setActivePlayer] = useState(null);
 
   return (
     <div className="user-page">
@@ -39,18 +38,8 @@ function MyList({films}) {
         <div className="catalog__films-list">
           {films.map((film, id) => {
             const keyValue = `${id}-${film.posterImage}`;
-
             return (
-              <Film
-                key={keyValue}
-                film={film}
-                isPlaying={id === activePlayer}
-                onVideoChange={() => {
-                  setTimeout(() => {
-                    setActivePlayer(id);
-                  }, 2000);
-                }}
-              />
+              <Film key={keyValue} film={film} />
             );
           })}
         </div>

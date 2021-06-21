@@ -1,16 +1,35 @@
-import React from 'react';
-import filmProp from '../film.prop.js';
+import React, {useRef, useEffect} from 'react';
+import PropTypes from 'prop-types';
 
-function VideoPlayer({film}) {
+import filmProp from '../film.prop.js';
+import {START_LOAD_VIDEO} from '../../../constants.js';
+
+function VideoPlayer({film, isActive}) {
+  const refVideo = useRef();
   const {previewVideoLink, posterImage} = film;
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (isActive) {
+        refVideo.current.play();
+      }
+    }, START_LOAD_VIDEO);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isActive]);
+
   return (
-    <video src={previewVideoLink} className="player__video"  poster={posterImage}></video>
+    isActive
+      ? <video src={previewVideoLink} className="player__video" ref={refVideo} muted poster={posterImage}></video>
+      : <img src={posterImage}/>
   );
 }
 
 VideoPlayer.propTypes = {
   film: filmProp,
+  isActive: PropTypes.bool.isRequired,
 };
 
 export default VideoPlayer;
