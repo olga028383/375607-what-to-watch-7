@@ -6,21 +6,21 @@ import VideoPlayer from './video-player/video-player';
 
 
 function Film({film}) {
-  const [active, setActive] = useState(false);
-  const {id, name} = film;
+  const [isActive, setIsActive] = useState(false);
+  const {id, name, posterImage} = film;
 
   const handleVideoActive = () => {
-    setActive(true);
+    setIsActive(true);
   };
 
   const handleVideoNotActive = () => {
-    setActive(false);
+    setIsActive(false);
   };
 
   return (
     <article className="small-film-card catalog__films-card" onMouseEnter={handleVideoActive} onMouseLeave={handleVideoNotActive}>
       <div className="small-film-card__image">
-        <VideoPlayer film={film} isActive={active}/>
+        {isActive ? <VideoPlayer film={film} isActive={isActive}/> : <img src={posterImage} alt={name}/>}
       </div>
       <h3 className="small-film-card__title">
         <Link to={`/films/${id}`} className="small-film-card__link">{name}</Link>

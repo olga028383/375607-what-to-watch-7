@@ -20,11 +20,7 @@ function VideoPlayer({film, isActive}) {
     };
   }, [isActive]);
 
-  return (
-    isActive
-      ? <video src={previewVideoLink} className="player__video" ref={refVideo} muted poster={posterImage}></video>
-      : <img src={posterImage}/>
-  );
+  return (<video src={previewVideoLink} className="player__video" ref={refVideo} muted poster={posterImage}></video>);
 }
 
 VideoPlayer.propTypes = {
