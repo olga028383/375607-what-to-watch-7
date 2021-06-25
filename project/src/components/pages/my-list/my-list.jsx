@@ -5,8 +5,7 @@ import filmProp from '../../film/film.prop.js';
 import Film from '../../film/film';
 import Footer from '../../footer/footer.jsx';
 
-function MyList(props) {
-  const {films} = props;
+function MyList({films}) {
 
   return (
     <div className="user-page">
@@ -39,8 +38,9 @@ function MyList(props) {
         <div className="catalog__films-list">
           {films.map((film, id) => {
             const keyValue = `${id}-${film.posterImage}`;
-
-            return <Film key={keyValue} film={film}/>;
+            return (
+              <Film key={keyValue} film={film} />
+            );
           })}
         </div>
       </section>
