@@ -1,7 +1,5 @@
-import * as dayjs from 'dayjs'
+import * as dayjs from 'dayjs';
 
-const getDataReviewFormat = (date, format) => {
-  return dayjs(date).format(format);
-};
+const getDataReviewFormat = (date, format) => dayjs(date).format(format);
 
 export {getDataReviewFormat};

@@ -9,13 +9,17 @@ const AppRoute = {
 
 const TabsName = {
   REVIEWS: 'reviews',
-  DETAILS: 'details'
+  DETAILS: 'details',
 };
 
-const COUNT_FILMS_LIST = 19;
+const FilmsCount = {
+  LIST: 19,
+  HOME: 8,
+  SIMILAR: 4,
+};
 
 const COUNT_RATING = 10;
 
 const START_LOAD_VIDEO = 1000;
 
-export {AppRoute, COUNT_FILMS_LIST, COUNT_RATING, START_LOAD_VIDEO, TabsName};
+export {AppRoute, FilmsCount, COUNT_RATING, START_LOAD_VIDEO, TabsName};

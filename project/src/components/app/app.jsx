@@ -37,7 +37,7 @@ function App({films, comments}) {
         <Route
           exact
           path={AppRoute.FILM_DETAIL}
-          render={({match}) => <FilmDetail film={films.find((film) => film.id === Number(match.params.id))} comments={comments}/>}
+          render={({match}) => <FilmDetail films={films} comments={comments}/>}
         >
         </Route>
         <Route

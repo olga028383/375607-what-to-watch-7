@@ -36,7 +36,7 @@ function Overview({film}) {
         </p>
       </div>
     </React.Fragment>
-  )
+  );
 }
 
 Overview.propTypes = {
