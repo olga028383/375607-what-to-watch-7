@@ -18,8 +18,16 @@ const FilmsCount = {
   SIMILAR: 4,
 };
 
+const Ratings = {
+  BAD: 'Bad',
+  NORMAL: 'Normal',
+  GOOD: 'Good',
+  VERY_GOOD: 'Very Good',
+  AWESOME: 'Awesome',
+};
+
 const COUNT_RATING = 10;
 
 const START_LOAD_VIDEO = 1000;
 
-export {AppRoute, FilmsCount, COUNT_RATING, START_LOAD_VIDEO, TabsName};
+export {AppRoute, FilmsCount, COUNT_RATING, START_LOAD_VIDEO, TabsName, Ratings};

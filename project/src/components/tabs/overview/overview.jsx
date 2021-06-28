@@ -1,17 +1,19 @@
 import React from 'react';
 import filmProp from '../../film/film.prop.js';
 
+import {Ratings} from '../../../constants.js';
+
 const showRatingText = (rating) =>{
   if(rating > 0 && rating < 3){
-    return 'Bad';
+    return Ratings.BAD;
   }else if(rating >=3 && rating < 5){
-    return 'Normal';
+    return Ratings.NORMAL;
   }else if(rating >=5 && rating < 8){
-    return 'Good';
+    return Ratings.GOOD;
   }else if(rating >=8 && rating < 10){
-    return 'Very good';
+    return Ratings.VERY_GOOD;
   }else{
-    return 'Awesome';
+    return Ratings.AWESOME;
   }
 };
 
