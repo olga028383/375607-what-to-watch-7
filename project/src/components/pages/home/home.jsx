@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import filmProp from '../../film/film.prop.js';
-import Film from '../../film/film';
+import FilmList from '../../film-list/film-list';
 import Footer from '../../footer/footer.jsx';
 
-function Home(props) {
-  const {name, genre, date, films} = props;
+import {FilmsCount} from '../../../constants.js';
+
+import filmProp from '../../film/film.prop.js';
+
+function Home({name, genre, date, films}) {
   return (
     <React.Fragment>
       <section className="film-card">
@@ -102,13 +104,7 @@ function Home(props) {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {films.map((film, id) => {
-              const keyValue = `${id}-${film.posterImage}`;
-
-              return <Film key={keyValue} film={film}/>;
-            })}
-          </div>
+          <FilmList films={films} count={FilmsCount.HOME}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

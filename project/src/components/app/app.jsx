@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
-import {AppRoute} from '../../constants.js';
 import Home from '../pages/home/home';
 import MyList from '../pages/my-list/my-list';
 import FilmDetail from '../pages/film-detail/film-detail';
@@ -11,10 +10,13 @@ import Review from '../pages/review/review';
 import Player from '../pages/player/player';
 import NotFound from '../not-found/not-found';
 
-import filmProp from '../film/film.prop.js';
+import {AppRoute} from '../../constants.js';
 
-function App(props) {
-  const {films} = props;
+import filmProp from '../film/film.prop.js';
+import reviewProp from '../review/review.prop.js';
+
+function App({films, comments}) {
+
   return (
     <BrowserRouter>
       <Switch>
@@ -32,19 +34,22 @@ function App(props) {
         <Route exact path={AppRoute.MY_LIST}>
           <MyList films={films}/>
         </Route>
-        <Route exact path={AppRoute.FILM_DETAIL}>
-          <FilmDetail/>
+        <Route
+          exact
+          path={AppRoute.FILM_DETAIL}
+          render={({match}) => <FilmDetail films={films} comments={comments}/>}
+        >
         </Route>
         <Route
           exact
           path={AppRoute.REVIEW}
-          render={({match}) => <Review film={films[match.params.id]}/>}
+          render={({match}) => <Review film={films.find((film) => film.id === Number(match.params.id))}/>}
         >
         </Route>
         <Route
           exact
           path={AppRoute.PLAYER}
-          render={({match}) => <Player film={films[match.params.id]}/>}
+          render={({match}) => <Player film={films.find((film) => film.id === Number(match.params.id))}/>}
         >
         </Route>
         <Route>
@@ -57,6 +62,7 @@ function App(props) {
 
 App.propTypes = {
   films: PropTypes.arrayOf(filmProp).isRequired,
+  comments: PropTypes.arrayOf(reviewProp).isRequired,
 };
 
 export default App;

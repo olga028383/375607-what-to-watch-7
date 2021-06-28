@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import filmProp from '../../film/film.prop.js';
-import Film from '../../film/film';
+import FilmList from '../../film-list/film-list';
 import Footer from '../../footer/footer.jsx';
+
+import filmProp from '../../film/film.prop.js';
 
 function MyList({films}) {
 
@@ -35,14 +36,8 @@ function MyList({films}) {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <div className="catalog__films-list">
-          {films.map((film, id) => {
-            const keyValue = `${id}-${film.posterImage}`;
-            return (
-              <Film key={keyValue} film={film} />
-            );
-          })}
-        </div>
+        <FilmList films={films} count={films.length}/>
+
       </section>
 
       <Footer/>
