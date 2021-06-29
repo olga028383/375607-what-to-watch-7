@@ -1,4 +1,5 @@
-const MIN_TIME = 60;
+import {MIN_TIME, ALL_GENRES} from './constants.js';
+
 
 const getLengthTimeFormat = (numeric) => {
   const minutes = numeric % MIN_TIME;
@@ -15,4 +16,12 @@ const getLengthTimeFormat = (numeric) => {
   return result.trim();
 };
 
-export {getLengthTimeFormat};
+const getFilterFilms = (genre, films) => {
+  if (genre === ALL_GENRES) {
+    return films;
+  }
+
+  return films.filter((film) => film.genre === genre);
+};
+
+export {getLengthTimeFormat, getFilterFilms};

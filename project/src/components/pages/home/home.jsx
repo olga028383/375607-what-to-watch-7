@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 import GenreList from '../../genre-list/genre-list';
 import FilmList from '../../film-list/film-list';
 import Footer from '../../footer/footer.jsx';
 
 import {FilmsCount} from '../../../constants.js';
+import {getFilterFilms} from '../../../util.js';
 
 import filmProp from '../../film/film.prop.js';
 
-function Home({name, genre, date, films}) {
+function Home({name, genre, date, films, currentFilter}) {
   return (
     <React.Fragment>
       <section className="film-card">
@@ -74,7 +76,8 @@ function Home({name, genre, date, films}) {
 
 
           <GenreList films={films}/>
-          <FilmList films={films} count={FilmsCount.HOME}/>
+
+          <FilmList films={getFilterFilms(currentFilter, films)} count={FilmsCount.HOME}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
@@ -92,6 +95,11 @@ Home.propTypes = {
   genre: PropTypes.string.isRequired,
   date: PropTypes.number.isRequired,
   films: PropTypes.arrayOf(filmProp).isRequired,
+  currentFilter: PropTypes.string.isRequired,
 };
+const mapStateToProps = (state) => ({
+  currentFilter: state.genre,
+});
 
-export default Home;
+export {Home};
+export default connect(mapStateToProps)(Home);

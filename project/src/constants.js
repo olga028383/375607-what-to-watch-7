@@ -30,4 +30,8 @@ const COUNT_RATING = 10;
 
 const START_LOAD_VIDEO = 1000;
 
-export {AppRoute, FilmsCount, COUNT_RATING, START_LOAD_VIDEO, TabsName, Ratings};
+const ALL_GENRES = 'All genres';
+
+const MIN_TIME = 60;
+
+export {AppRoute, FilmsCount, COUNT_RATING, START_LOAD_VIDEO, TabsName, Ratings, ALL_GENRES, MIN_TIME};
