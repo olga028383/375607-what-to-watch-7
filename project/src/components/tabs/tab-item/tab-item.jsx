@@ -6,7 +6,7 @@ function TabItem({to, title, ...rest}) {
   const location = useLocation();
 
   return (
-    <li className={(to === location.pathname) ? 'film-nav__item  film-nav__item--active' : 'film-nav__item '}>
+    <li className={'film-nav__item' + ((to === location.pathname) ? ' film-nav__item--active' : '')}>
       <Link to={to} {...rest}>{title}</Link>
     </li>
   );

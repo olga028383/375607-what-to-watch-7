@@ -16,7 +16,7 @@ function GenreList(props) {
     <ul className="catalog__genres-list">
 
       {generateList(films).map((item, id) => (
-        <li key={item} className={(item === genre) ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}>
+        <li key={item} className={'catalog__genres-item' + ((item === genre) ? ' catalog__genres-item--active' : '')}>
           <a href="#" className="catalog__genres-link" onClick={(evt) => {
             evt.preventDefault();
             onChangeGenre(item);
