@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import GenreList from '../../genre-list/genre-list';
 import FilmList from '../../film-list/film-list';
+import MoreButton from '../../more-button/more-button';
 import Footer from '../../footer/footer.jsx';
 
 import {FilmsCount} from '../../../constants.js';
@@ -12,6 +13,17 @@ import {getFilterFilms} from '../../../util.js';
 import filmProp from '../../film/film.prop.js';
 
 function Home({name, genre, date, films, currentFilter}) {
+  const filmsFiltered = getFilterFilms(currentFilter, films);
+  const [countFilms, setCountFilms] = useState(FilmsCount.HOME);
+
+  const onClickButton = () => {
+    setCountFilms(countFilms + FilmsCount.HOME);
+  };
+
+  const onClickGenre = () => {
+    setCountFilms(FilmsCount.HOME);
+  };
+
   return (
     <React.Fragment>
       <section className="film-card">
@@ -75,13 +87,12 @@ function Home({name, genre, date, films, currentFilter}) {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
 
-          <GenreList films={films}/>
+          <GenreList films={films} onClickGenre={onClickGenre}/>
 
-          <FilmList films={getFilterFilms(currentFilter, films)} count={FilmsCount.HOME}/>
+          <FilmList films={filmsFiltered} count={countFilms}/>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {countFilms < filmsFiltered.length && <MoreButton onClickButton={onClickButton}/>}
+
         </section>
 
         <Footer/>
