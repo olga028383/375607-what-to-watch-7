@@ -4,9 +4,10 @@ import {Link, useLocation} from 'react-router-dom';
 
 function TabItem({to, title, ...rest}) {
   const location = useLocation();
+  const activeTab = (to === location.pathname) && 'film-nav__item--active';
 
   return (
-    <li className={(to === location.pathname) ? 'film-nav__item  film-nav__item--active' : 'film-nav__item '}>
+    <li className={`film-nav__item ${activeTab}`}>
       <Link to={to} {...rest}>{title}</Link>
     </li>
   );
