@@ -1,10 +1,10 @@
 import {ActionType} from './action';
-import films from '../mocks/films.js';
 import {ALL_GENRES} from '../constants.js';
 
 const initialState = {
   genre: ALL_GENRES,
-  films: films,
+  films: [],
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,12 +12,13 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_GENRE:
       return {
         ...state,
-        genre: action.genre,
+        genre: action.payload,
       };
     case ActionType.GET_FILMS:
       return {
         ...state,
-        films: state.films,
+        films: action.payload,
+        isDataLoaded: true,
       };
     default:
       return state;
