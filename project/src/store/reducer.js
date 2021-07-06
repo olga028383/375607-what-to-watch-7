@@ -20,6 +20,11 @@ const reducer = (state = initialState, action) => {
         films: action.payload,
         isDataLoaded: true,
       };
+    case ActionType.GET_FILM_PROMO:
+      return {
+        ...state,
+        promo: action.payload,
+      };
     default:
       return state;
   }

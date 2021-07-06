@@ -28,6 +28,7 @@ const Ratings = {
 
 const ApiRoute = {
   FILMS: '/films',
+  FILM_PROMO: '/promo',
 };
 
 const COUNT_RATING = 10;

@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 
 import {createApi} from './api';
-import {fetchFilms} from './store/api-actions';
+import {fetchFilms,fetchFilmPromo} from './store/api-actions';
 
 import App from './components/app/app';
 
@@ -21,7 +21,9 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
 );
 
+store.dispatch(fetchFilmPromo());
 store.dispatch(fetchFilms());
+
 
 ReactDOM.render(
   <React.StrictMode>

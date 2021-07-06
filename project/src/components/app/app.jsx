@@ -17,7 +17,7 @@ import {AppRoute} from '../../constants.js';
 import filmProp from '../film/film.prop.js';
 import reviewProp from '../review/review.prop.js';
 
-function App({films, isDataLoaded, comments}) {
+function App({films, isDataLoaded, promo, comments}) {
   if (!isDataLoaded) {
     return (
       <Loading/>
@@ -32,9 +32,7 @@ function App({films, isDataLoaded, comments}) {
         </Route>
         <Route exact path={AppRoute.ROOT}>
           <Home
-            name={'The Grand Budapest Hotel'}
-            genre={'Drama'}
-            date={2014}
+            promo={promo}
             films={films}
           />
         </Route>
@@ -69,6 +67,7 @@ function App({films, isDataLoaded, comments}) {
 
 App.propTypes = {
   films: PropTypes.arrayOf(filmProp).isRequired,
+  promo: PropTypes.arrayOf(filmProp).isRequired,
   comments: PropTypes.arrayOf(reviewProp).isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
 };
@@ -76,6 +75,7 @@ App.propTypes = {
 const mapStateToProps = (state) => ({
   films: state.films,
   isDataLoaded: state.isDataLoaded,
+  promo: state.promo,
 });
 
 export {App};
