@@ -21,9 +21,8 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
 );
 
-store.dispatch(fetchFilmPromo());
 store.dispatch(fetchFilms());
-
+store.dispatch(fetchFilmPromo());
 
 ReactDOM.render(
   <React.StrictMode>
