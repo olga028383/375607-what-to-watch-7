@@ -4,6 +4,7 @@ import {ALL_GENRES} from '../constants.js';
 const initialState = {
   genre: ALL_GENRES,
   films: [],
+  promo: {},
   isDataLoaded: false,
 };
 
@@ -18,6 +19,10 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         films: action.payload,
+      };
+    case ActionType.LOAD_DATA:
+      return {
+        ...state,
         isDataLoaded: true,
       };
     case ActionType.GET_FILM_PROMO:

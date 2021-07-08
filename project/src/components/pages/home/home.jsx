@@ -103,7 +103,7 @@ function Home({promo, films, currentFilter}) {
 }
 
 Home.propTypes = {
-  promo: PropTypes.arrayOf(filmProp).isRequired,
+  promo: filmProp,
   films: PropTypes.arrayOf(filmProp).isRequired,
   currentFilter: PropTypes.string.isRequired,
 };

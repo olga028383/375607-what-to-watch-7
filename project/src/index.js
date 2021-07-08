@@ -6,7 +6,8 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 
 import {createApi} from './api';
-import {fetchFilms,fetchFilmPromo} from './store/api-actions';
+import {fetchFilms, fetchFilmPromo} from './store/api-actions';
+import {ActionCreator} from './store/action';
 
 import App from './components/app/app';
 
@@ -14,15 +15,25 @@ import comments from './mocks/comments.js';
 
 import {reducer} from './store/reducer';
 
-const api = createApi(()=>{});
+const api = createApi(() => {
+});
 
 const store = createStore(
   reducer,
   composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
 );
 
-store.dispatch(fetchFilms());
-store.dispatch(fetchFilmPromo());
+Promise
+  .all([
+    new Promise((resolve) => {
+      store.dispatch(fetchFilms(resolve));
+    }),
+    new Promise((resolve) => {
+      store.dispatch(fetchFilmPromo(resolve));
+    }),
+  ])
+  .then((value) => store.dispatch(ActionCreator.loadData()));
+
 
 ReactDOM.render(
   <React.StrictMode>

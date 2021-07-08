@@ -67,15 +67,15 @@ function App({films, isDataLoaded, promo, comments}) {
 
 App.propTypes = {
   films: PropTypes.arrayOf(filmProp).isRequired,
-  promo: PropTypes.arrayOf(filmProp).isRequired,
+  promo: PropTypes.object.isRequired,
   comments: PropTypes.arrayOf(reviewProp).isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
-  isDataLoaded: state.isDataLoaded,
   promo: state.promo,
+  isDataLoaded: state.isDataLoaded,
 });
 
 export {App};
