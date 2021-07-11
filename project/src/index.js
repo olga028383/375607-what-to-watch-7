@@ -15,8 +15,7 @@ import comments from './mocks/comments.js';
 
 import {reducer} from './store/reducer';
 
-const api = createApi(() => {
-});
+const api = createApi();
 
 const store = createStore(
   reducer,
@@ -25,14 +24,14 @@ const store = createStore(
 
 Promise
   .all([
-    new Promise((resolve) => {
-      store.dispatch(fetchFilms(resolve));
-    }),
-    new Promise((resolve) => {
-      store.dispatch(fetchFilmPromo(resolve));
-    }),
+    fetchFilms(api),
+    fetchFilmPromo(api),
   ])
-  .then((value) => store.dispatch(ActionCreator.loadData()));
+  .then(([films, promoFilm]) => {
+    store.dispatch(ActionCreator.setFilms(films));
+    store.dispatch(ActionCreator.setFilmPromo(promoFilm));
+    store.dispatch(ActionCreator.loadData());
+  });
 
 
 ReactDOM.render(

@@ -1,8 +1,8 @@
 
 export const ActionType = {
   CHANGE_GENRE: 'filter/changeGenre',
-  GET_FILMS: 'data/getFilms',
-  GET_FILM_PROMO: 'data/getFilmPromo',
+  SET_FILMS: 'data/setFilms',
+  SET_FILM_PROMO: 'data/setFilmPromo',
   LOAD_DATA: 'data/loadData',
 };
 
@@ -11,12 +11,12 @@ export const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: genre,
   }),
-  getFilms: (films) => ({
-    type: ActionType.GET_FILMS,
+  setFilms: (films) => ({
+    type: ActionType.SET_FILMS,
     payload : films,
   }),
-  getFilmPromo: (film) => ({
-    type: ActionType.GET_FILM_PROMO,
+  setFilmPromo: (film) => ({
+    type: ActionType.SET_FILM_PROMO,
     payload : film,
   }),
   loadData: () => ({

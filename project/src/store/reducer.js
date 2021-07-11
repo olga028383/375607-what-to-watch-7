@@ -15,7 +15,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         genre: action.payload,
       };
-    case ActionType.GET_FILMS:
+    case ActionType.SET_FILMS:
       return {
         ...state,
         films: action.payload,
@@ -25,7 +25,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         isDataLoaded: true,
       };
-    case ActionType.GET_FILM_PROMO:
+    case ActionType.SET_FILM_PROMO:
       return {
         ...state,
         promo: action.payload,
