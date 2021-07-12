@@ -12,9 +12,10 @@ import {getFilterFilms} from '../../../util.js';
 
 import filmProp from '../../film/film.prop.js';
 
-function Home({name, genre, date, films, currentFilter}) {
+function Home({promo, films, currentFilter}) {
   const filmsFiltered = getFilterFilms(currentFilter, films);
   const [countFilms, setCountFilms] = useState(FilmsCount.HOME);
+  const {name, genre, date, posterImage} = promo;
 
   const onClickButton = () => {
     setCountFilms(countFilms + FilmsCount.HOME);
@@ -54,7 +55,7 @@ function Home({name, genre, date, films, currentFilter}) {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src={posterImage} alt={name} width="218" height="327"/>
             </div>
 
             <div className="film-card__desc">
@@ -102,12 +103,11 @@ function Home({name, genre, date, films, currentFilter}) {
 }
 
 Home.propTypes = {
-  name: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  date: PropTypes.number.isRequired,
+  promo: filmProp,
   films: PropTypes.arrayOf(filmProp).isRequired,
   currentFilter: PropTypes.string.isRequired,
 };
+
 const mapStateToProps = (state) => ({
   currentFilter: state.genre,
 });
