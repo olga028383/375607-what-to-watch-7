@@ -1,4 +1,4 @@
-import {MIN_TIME, ALL_GENRES} from './constants.js';
+import {MIN_TIME, ALL_GENRES, AuthorizationStatus} from './constants.js';
 
 
 const getLengthTimeFormat = (numeric) => {
@@ -24,4 +24,8 @@ const getFilterFilms = (genre, films) => {
   return films.filter((film) => film.genre === genre);
 };
 
-export {getLengthTimeFormat, getFilterFilms};
+const isCheckAuth = (authorizationStatus) => authorizationStatus === AuthorizationStatus.AUTH;
+
+const isValidateEmail = (email) => /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/.test(email);
+
+export {getLengthTimeFormat, getFilterFilms, isCheckAuth, isValidateEmail};

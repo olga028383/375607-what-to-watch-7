@@ -28,4 +28,17 @@ const adaptToClientFilm = (film) => {
   return adaptedFilm;
 };
 
-export {adaptToClientFilm};
+const adaptToClientUser = (user) => {
+
+  const adaptedUser = Object.assign(
+    {},
+    user,
+    {
+      avatar: user.avatar_url,
+    },
+  );
+
+  delete adaptedUser.avatar_url;
+  return adaptedUser;
+};
+export {adaptToClientFilm, adaptToClientUser};
