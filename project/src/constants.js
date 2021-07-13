@@ -29,6 +29,14 @@ const Ratings = {
 const ApiRoute = {
   FILMS: '/films',
   FILM_PROMO: '/promo',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};
+
+const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
 };
 
 const COUNT_RATING = 10;
@@ -39,4 +47,4 @@ const ALL_GENRES = 'All genres';
 
 const MIN_TIME = 60;
 
-export {AppRoute, FilmsCount, COUNT_RATING, START_LOAD_VIDEO, TabsName, Ratings, ALL_GENRES, MIN_TIME, ApiRoute};
+export {AppRoute, FilmsCount, COUNT_RATING, START_LOAD_VIDEO, TabsName, Ratings, ALL_GENRES, MIN_TIME, ApiRoute, AuthorizationStatus};

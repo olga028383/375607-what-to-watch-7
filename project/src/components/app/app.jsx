@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import browserHistory from '../../browser-history';
 
 import Home from '../pages/home/home';
 import MyList from '../pages/my-list/my-list';
@@ -11,13 +12,15 @@ import Review from '../pages/review/review';
 import Player from '../pages/player/player';
 import NotFound from '../not-found/not-found';
 import Loading from '../loading/loading';
+import PrivateRouteLogin from '../private-route/private-route-login/private-route-login';
+import PrivateRouteTotal from '../private-route/private-route-total/private-route-total';
 
 import {AppRoute} from '../../constants.js';
 
 import filmProp from '../film/film.prop.js';
 import reviewProp from '../review/review.prop.js';
 
-function App({films, isDataLoaded, promo, comments}) {
+function App({films, isDataLoaded, comments}) {
   if (!isDataLoaded) {
     return (
       <Loading/>
@@ -25,32 +28,22 @@ function App({films, isDataLoaded, promo, comments}) {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path={AppRoute.LOGIN}>
-          <SingIn/>
-        </Route>
+        <PrivateRouteLogin exact path={AppRoute.LOGIN} render={() => <SingIn/>}></PrivateRouteLogin>
         <Route exact path={AppRoute.ROOT}>
           <Home
-            promo={promo}
             films={films}
           />
         </Route>
-        <Route exact path={AppRoute.MY_LIST}>
-          <MyList films={films}/>
-        </Route>
+        <PrivateRouteTotal exact path={AppRoute.MY_LIST} render={() => <MyList films={films}/>} />
         <Route
           exact
           path={AppRoute.FILM_DETAIL}
           render={({match}) => <FilmDetail films={films} comments={comments}/>}
         >
         </Route>
-        <Route
-          exact
-          path={AppRoute.REVIEW}
-          render={({match}) => <Review film={films.find((film) => film.id === Number(match.params.id))}/>}
-        >
-        </Route>
+        <PrivateRouteTotal exact path={AppRoute.REVIEW} render={({match}) => <Review film={films.find((film) => film.id === Number(match.params.id))}/>} />
         <Route
           exact
           path={AppRoute.PLAYER}
@@ -67,14 +60,12 @@ function App({films, isDataLoaded, promo, comments}) {
 
 App.propTypes = {
   films: PropTypes.arrayOf(filmProp).isRequired,
-  promo: PropTypes.object.isRequired,
   comments: PropTypes.arrayOf(reviewProp).isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
-  promo: state.promo,
   isDataLoaded: state.isDataLoaded,
 });
 

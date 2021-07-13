@@ -6,8 +6,10 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 
 import {createApi} from './api';
-import {fetchFilms, fetchFilmPromo} from './store/api-actions';
+import {fetchFilms, fetchFilmPromo, checkAuth} from './store/api-actions';
 import {ActionCreator} from './store/action';
+import {AuthorizationStatus} from './constants';
+import {redirect} from './store/middlewares/redirect';
 
 import App from './components/app/app';
 
@@ -15,12 +17,14 @@ import comments from './mocks/comments.js';
 
 import {reducer} from './store/reducer';
 
-const api = createApi();
+const api = createApi(() => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)));
 
 const store = createStore(
   reducer,
-  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
+  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)), applyMiddleware(redirect)),
 );
+
+store.dispatch(checkAuth());
 
 Promise
   .all([
