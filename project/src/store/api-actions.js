@@ -1,16 +1,25 @@
 import {ActionCreator} from './action';
 import {ApiRoute, AuthorizationStatus, AppRoute} from '../constants';
-import {adaptToClientFilm, adaptToClientUser} from './adapters';
+import {adaptToClientFilm, adaptToClientUser, adaptToClientComment} from './adapters';
 
 export const fetchFilms = (api) => (
   api.get(ApiRoute.FILMS)
     .then(({data}) => data.map(adaptToClientFilm))
 );
 
-export const fetchFilm = (id) => (dispatch, _getState, api) => (
+export const fetchFilm = (id, api) => (
   api.get(`${ApiRoute.FILMS}/${id}`)
-    .then(({data}) => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH, adaptToClientUser(data))))
-    .catch(() => {})
+    .then(({data}) => adaptToClientFilm(data))
+);
+
+export const fetchComments = (filmId, api) => (
+  api.get(`${ApiRoute.COMMENTS}/${filmId}`)
+    .then(({data}) =>  data.map(adaptToClientComment))
+);
+
+export const fetchSimilarFilms = (filmId, api) => (
+  api.get(`${ApiRoute.FILMS}/${filmId}${ApiRoute.SIMILAR}`)
+    .then(({data}) => data.map(adaptToClientFilm))
 );
 
 export const fetchFilmPromo = (api) => (

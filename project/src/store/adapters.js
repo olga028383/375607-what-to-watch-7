@@ -41,4 +41,21 @@ const adaptToClientUser = (user) => {
   delete adaptedUser.avatar_url;
   return adaptedUser;
 };
-export {adaptToClientFilm, adaptToClientUser};
+
+const adaptToClientComment = (comment) => {
+
+  const adaptedComment = Object.assign(
+    {},
+    comment,
+    {
+      userId: comment.user.id,
+      userName: comment.user.name,
+    },
+  );
+
+  delete adaptedComment.user;
+
+  return adaptedComment;
+};
+
+export {adaptToClientFilm, adaptToClientUser, adaptToClientComment};

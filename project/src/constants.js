@@ -31,6 +31,8 @@ const ApiRoute = {
   FILM_PROMO: '/promo',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  COMMENTS: '/comments',
+  SIMILAR: '/similar',
 };
 
 const AuthorizationStatus = {
