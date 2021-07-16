@@ -9,11 +9,10 @@ import UserInfo from './user-info/user-info';
 
 
 function User({authorizationStatus}) {
-
   return (
     isCheckAuth(authorizationStatus)
       ?
-      <UserInfo />
+      <UserInfo/>
       :
       <div className="user-block">
         <Link to={AppRoute.LOGIN} className="user-block__link">Sign in</Link>

@@ -43,11 +43,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
-    case ActionType.REDIRECT_TO_ROUTER:
-      return {
-        ...state,
-        authorizationStatus: AuthorizationStatus.NO_AUTH,
-      };
     default:
       return state;
   }
