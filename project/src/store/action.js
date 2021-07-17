@@ -4,6 +4,9 @@ export const ActionType = {
   SET_FILMS: 'data/setFilms',
   SET_FILM_PROMO: 'data/setFilmPromo',
   LOAD_DATA: 'data/loadData',
+  REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
+  LOGOUT: 'user/logout',
+  REDIRECT_TO_ROUTER: 'redirect',
 };
 
 export const ActionCreator = {
@@ -22,5 +25,17 @@ export const ActionCreator = {
   loadData: () => ({
     type: ActionType.LOAD_DATA,
     payload: true,
+  }),
+  requireAuthorization: (status, user) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    status: status,
+    user: user,
+  }),
+  logout: () => ({
+    type: ActionType.LOGOUT,
+  }),
+  redirect: (url) =>({
+    type: ActionType.REDIRECT_TO_ROUTER,
+    payload: url,
   }),
 };
