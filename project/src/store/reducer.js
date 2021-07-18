@@ -8,6 +8,7 @@ const initialState = {
   user: {},
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  api: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -42,6 +43,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
+      };
+    case ActionType.GET_API:
+      return {
+        ...state,
+        api: action.payload,
       };
     default:
       return state;
