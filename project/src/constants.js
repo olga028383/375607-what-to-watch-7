@@ -33,6 +33,7 @@ const ApiRoute = {
   LOGOUT: '/logout',
   COMMENTS: '/comments',
   SIMILAR: '/similar',
+  NOT_FOUND: '/similar',
 };
 
 const AuthorizationStatus = {

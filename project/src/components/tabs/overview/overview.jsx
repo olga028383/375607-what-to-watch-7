@@ -18,7 +18,7 @@ const showRatingText = (rating) =>{
 };
 
 function Overview({film}) {
-  const {rating, description, director, starring, scoresCount} = film;
+  const {rating, description, director, starring = [], scoresCount} = film;
   return (
     <React.Fragment>
       <div className="film-rating">

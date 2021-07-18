@@ -7,6 +7,7 @@ export const ActionType = {
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTER: 'redirect',
+  GET_API: 'getApi',
 };
 
 export const ActionCreator = {
@@ -33,6 +34,10 @@ export const ActionCreator = {
   }),
   logout: () => ({
     type: ActionType.LOGOUT,
+  }),
+  setApi: (api) => ({
+    type: ActionType.GET_API,
+    payload: api,
   }),
   redirect: (url) =>({
     type: ActionType.REDIRECT_TO_ROUTER,

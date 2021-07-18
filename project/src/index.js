@@ -13,8 +13,6 @@ import {redirect} from './store/middlewares/redirect';
 
 import App from './components/app/app';
 
-import comments from './mocks/comments.js';
-
 import {reducer} from './store/reducer';
 
 const api = createApi(() => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)));
@@ -24,6 +22,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)), applyMiddleware(redirect)),
 );
 
+store.dispatch(ActionCreator.setApi(api));
 store.dispatch(checkAuth());
 
 Promise
@@ -41,9 +40,7 @@ Promise
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-        comments={comments}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
 
