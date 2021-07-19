@@ -1,26 +1,69 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {useParams, useHistory} from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
+import {connect} from 'react-redux';
 
+import Loading from '../../loading/loading';
 import FilmList from '../../film-list/film-list';
-import Header from '../../header/header.jsx';
-import Footer from '../../footer/footer.jsx';
+import Header from '../../header/header';
+import Footer from '../../footer/footer';
 import User from '../../header/user/user';
-import Tabs from '../../tabs/tabs.jsx';
+import Tabs from '../../tabs/tabs';
+import FilmInfo from './film-info/film-info';
+import NotFound from '../../not-found/not-found';
 
-import {FilmsCount, AppRoute} from '../../../constants.js';
+import {fetchFilm, fetchComments, fetchSimilarFilms} from '../../../store/api-actions';
 
-import filmProp from '../../film/film.prop.js';
-import reviewProp from '../../review/review.prop.js';
-
-const getSimilarFilms = (films, filmCurrent) => films.filter((film) => filmCurrent.genre === film.genre);
-
-function FilmDetail({films, comments}) {
+function FilmDetail({api}) {
   const params = useParams();
-  const history = useHistory();
-  const filmCurrent = films.find((film) => film.id === Number(params.id));
-  const {id, name, genre, released, backgroundImage, posterImage} = filmCurrent;
+
+  const [data, setData] = useState({
+    film: {},
+    comments: [],
+    similar: [],
+    isLoading: false,
+    isPage: true,
+  });
+
+  const {film, comments, similar, isLoading, isPage} = data;
+  const {name, backgroundImage, posterImage} = film;
+
+  useEffect(() => {
+
+    Promise
+      .all([
+        fetchFilm(params.id, api),
+        fetchComments(params.id, api),
+        fetchSimilarFilms(params.id, api),
+      ])
+      .then(([filmData, commentsData, similarData]) => {
+        setData({
+          ...data,
+          film: filmData,
+          comments: commentsData,
+          similar: similarData,
+          isLoading: true,
+        });
+      })
+      .catch(() => {
+        setData({
+          ...data,
+          isPage: false,
+        });
+      });
+  }, [params.id]);
+
+  if (!isPage) {
+    return (
+      <NotFound/>
+    );
+  }
+
+  if (!isLoading) {
+    return (
+      <Loading/>
+    );
+  }
 
   return (
     <React.Fragment>
@@ -33,34 +76,11 @@ function FilmDetail({films, comments}) {
           <h1 className="visually-hidden">WTW</h1>
 
           <Header className='page-header film-card__head'>
-            <User />
+            <User/>
           </Header>
 
-          <div className="film-card__wrap">
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{released}</span>
-              </p>
+          <FilmInfo film={film}/>
 
-              <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button" onClick={() => history.push(AppRoute.MY_LIST)}>
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-                <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="film-card__wrap film-card__translate-top">
@@ -71,7 +91,7 @@ function FilmDetail({films, comments}) {
 
             <div className="film-card__desc">
 
-              <Tabs film={filmCurrent} comments={comments}/>
+              <Tabs film={film} comments={comments}/>
 
             </div>
           </div>
@@ -82,7 +102,7 @@ function FilmDetail({films, comments}) {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={getSimilarFilms(films, filmCurrent)} count={FilmsCount.SIMILAR}/>
+          <FilmList films={similar} count={similar.length}/>
 
         </section>
 
@@ -93,8 +113,12 @@ function FilmDetail({films, comments}) {
 }
 
 FilmDetail.propTypes = {
-  films: PropTypes.arrayOf(filmProp).isRequired,
-  comments: PropTypes.arrayOf(reviewProp).isRequired,
+  api: PropTypes.func.isRequired,
 };
 
-export default FilmDetail;
+const mapStateToProps = (state) => ({
+  api: state.api,
+});
+
+export {FilmDetail};
+export default connect(mapStateToProps, null)(FilmDetail);

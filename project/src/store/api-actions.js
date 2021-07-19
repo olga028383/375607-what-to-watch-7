@@ -17,6 +17,8 @@ export const fetchComments = (filmId, api) => (
     .then(({data}) =>  data.map(adaptToClientComment))
 );
 
+export const sendComment = (rating, comment, filmId, api) => api.post(`${ApiRoute.COMMENTS}/${filmId}`, {rating, comment});
+
 export const fetchSimilarFilms = (filmId, api) => (
   api.get(`${ApiRoute.FILMS}/${filmId}${ApiRoute.SIMILAR}`)
     .then(({data}) => data.map(adaptToClientFilm))
