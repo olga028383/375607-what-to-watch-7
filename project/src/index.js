@@ -7,22 +7,22 @@ import thunk from 'redux-thunk';
 
 import {createApi} from './api';
 import {fetchFilms, fetchFilmPromo, checkAuth} from './store/api-actions';
-import {ActionCreator} from './store/action';
+import {setApi, requireAuthorization, setFilms, setFilmPromo, loadData} from './store/action';
 import {AuthorizationStatus} from './constants';
 import {redirect} from './store/middlewares/redirect';
 
 import App from './components/app/app';
 
-import {reducer} from './store/reducer';
+import reducer from './store/reducer';
 
-const api = createApi(() => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)));
+const api = createApi(() => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)));
 
 const store = createStore(
   reducer,
   composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)), applyMiddleware(redirect)),
 );
 
-store.dispatch(ActionCreator.setApi(api));
+store.dispatch(setApi(api));
 store.dispatch(checkAuth());
 
 Promise
@@ -31,16 +31,16 @@ Promise
     fetchFilmPromo(api),
   ])
   .then(([films, promoFilm]) => {
-    store.dispatch(ActionCreator.setFilms(films));
-    store.dispatch(ActionCreator.setFilmPromo(promoFilm));
-    store.dispatch(ActionCreator.loadData());
+    store.dispatch(setFilms(films));
+    store.dispatch(setFilmPromo(promoFilm));
+    store.dispatch(loadData());
   });
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <App/>
     </Provider>
   </React.StrictMode>,
 

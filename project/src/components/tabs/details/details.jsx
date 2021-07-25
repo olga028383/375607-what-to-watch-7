@@ -13,7 +13,6 @@ function Details({film}) {
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
-          {/*Как отобразить бр*/}
           <span className="film-card__details-value">{starring.map((item) => <span key={item}>{item}<br/></span>)}</span>
         </p>
       </div>

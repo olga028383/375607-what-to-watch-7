@@ -1,4 +1,4 @@
-import {ActionCreator} from './action';
+import {requireAuthorization, redirect, logout as logoutAction} from './action';
 import {ApiRoute, AuthorizationStatus, AppRoute} from '../constants';
 import {adaptToClientFilm, adaptToClientUser, adaptToClientComment} from './adapters';
 
@@ -24,6 +24,13 @@ export const fetchSimilarFilms = (filmId, api) => (
     .then(({data}) => data.map(adaptToClientFilm))
 );
 
+export const fetchFavoriteFilms = (api) => (
+  api.get(ApiRoute.FAVORITE)
+    .then(({data}) => data.map(adaptToClientFilm))
+);
+
+export const addFavoriteFilm = (filmId, status, api) => api.post(`${ApiRoute.FAVORITE}/${filmId}/${status}`).then(({data}) => adaptToClientFilm(data));
+
 export const fetchFilmPromo = (api) => (
   api.get(ApiRoute.FILM_PROMO)
     .then(({data}) => adaptToClientFilm(data))
@@ -31,7 +38,7 @@ export const fetchFilmPromo = (api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
-    .then(({data}) => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH, adaptToClientUser(data))))
+    .then(({data}) => dispatch(requireAuthorization(AuthorizationStatus.AUTH, adaptToClientUser(data))))
     .catch(() => {})
 );
 
@@ -39,8 +46,8 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(ApiRoute.LOGIN, {email, password})
     .then(({data}) => {
       localStorage.setItem('token', data.token);
-      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH, adaptToClientUser(data)));
-      dispatch(ActionCreator.redirect(AppRoute.ROOT));
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH, adaptToClientUser(data)));
+      dispatch(redirect(AppRoute.ROOT));
     })
     .catch(() => {})
 );
@@ -48,5 +55,5 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(ApiRoute.LOGOUT)
     .then(({data}) => localStorage.removeItem('token'))
-    .then(() => dispatch(ActionCreator.logout()))
+    .then(() => dispatch(logoutAction()))
 );

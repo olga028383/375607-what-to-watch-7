@@ -1,13 +1,24 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {Link, useParams} from 'react-router-dom';
+import {connect} from 'react-redux';
 import FormReview from '../../add-review/add-review';
 
 import filmProp from '../../film/film.prop.js';
 import Header from '../../header/header.jsx';
 import User from '../../header/user/user';
+import NotFound from '../../not-found/not-found';
+import {getFilms} from '../../../store/data/selectors';
 
-function Review(props) {
-  const {film} = props;
+function Review({films}) {
+  const params = useParams();
+  const film = films.filter((currentFilm) => currentFilm.id === Number(params.id))[0];
+  if (!film) {
+    return (
+      <NotFound/>
+    );
+  }
+
   const {id, name, posterImage, backgroundImage} = film;
 
   return (
@@ -47,8 +58,14 @@ function Review(props) {
   );
 }
 
+
 Review.propTypes = {
-  film: filmProp,
+  films: PropTypes.arrayOf(filmProp).isRequired,
 };
 
-export default Review;
+const mapStateToProps = (state) => ({
+  films: getFilms(state),
+});
+
+export {Review};
+export default connect(mapStateToProps, null)(Review);

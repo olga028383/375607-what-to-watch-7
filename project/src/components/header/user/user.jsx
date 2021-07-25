@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import {isCheckAuth} from '../../../util';
 import {AppRoute} from '../../../constants';
 import UserInfo from './user-info/user-info';
+import {getAuthorizationStatus} from '../../../store/user/selectors';
 
 
 function User({authorizationStatus}) {
@@ -26,8 +27,8 @@ User.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export {User};
-export default connect(mapStateToProps, null)(User);
+export default React.memo(connect(mapStateToProps, null)(User));

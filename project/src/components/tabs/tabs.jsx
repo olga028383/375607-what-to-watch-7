@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {useParams} from 'react-router-dom';
 
 import Overview from './overview/overview.jsx';
@@ -10,13 +9,12 @@ import TabItem from './tab-item/tab-item.jsx';
 import {TabsName} from '../../constants.js';
 
 import filmProp from '../film/film.prop.js';
-import reviewProp from '../review/review.prop.js';
 
-const renderContentTab = (comments, film, params) => {
+const renderContentTab = (film, params) => {
 
   switch (params[0]) {
     case TabsName.REVIEWS:
-      return <Reviews comments={comments}/>;
+      return <Reviews/>;
     case TabsName.DETAILS:
       return <Details film={film}/>;
     default:
@@ -25,7 +23,7 @@ const renderContentTab = (comments, film, params) => {
 
 };
 
-function Tabs({film, comments}) {
+function Tabs({film}) {
   const {id} = film;
   const params = useParams();
 
@@ -39,7 +37,7 @@ function Tabs({film, comments}) {
         </ul>
       </nav>
 
-      {renderContentTab(comments, film, params)}
+      {renderContentTab(film, params)}
 
     </React.Fragment>
   );
@@ -47,6 +45,5 @@ function Tabs({film, comments}) {
 
 Tabs.propTypes = {
   film: filmProp,
-  comments: PropTypes.arrayOf(reviewProp).isRequired,
 };
 export default Tabs;

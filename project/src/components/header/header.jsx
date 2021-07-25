@@ -23,4 +23,4 @@ Header.propTypes = {
   className: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
-export default Header;
+export default React.memo(Header);

@@ -14,7 +14,7 @@ const TabsName = {
 
 const FilmsCount = {
   LIST: 19,
-  HOME: 8,
+  HOME: 4,
   SIMILAR: 4,
 };
 
@@ -33,7 +33,7 @@ const ApiRoute = {
   LOGOUT: '/logout',
   COMMENTS: '/comments',
   SIMILAR: '/similar',
-  NOT_FOUND: '/similar',
+  FAVORITE: '/favorite',
 };
 
 const AuthorizationStatus = {
