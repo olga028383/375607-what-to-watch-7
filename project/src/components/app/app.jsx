@@ -40,7 +40,7 @@ function App({isDataLoaded}) {
           render={({match}) => <FilmDetail/>}
         >
         </Route>
-        <PrivateRouteTotal exact path={AppRoute.REVIEW} render={({match}) => <Review/>}/>
+        <PrivateRouteTotal exact path={AppRoute.REVIEW} render={() => <Review/>}/>
         <Route
           exact
           path={AppRoute.PLAYER}

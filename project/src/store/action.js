@@ -23,6 +23,7 @@ const setFilmPromo = (film) => ({
   type: ActionType.SET_FILM_PROMO,
   payload: film,
 });
+
 const loadData = () => ({
   type: ActionType.SET_IS_LOAD_DATA,
   payload: true,
@@ -33,6 +34,7 @@ const requireAuthorization = (status, user) => ({
   status: status,
   user: user,
 });
+
 const logout = () => ({
   type: ActionType.LOGOUT,
 });

@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import FilmList from '../film-list/film-list';
 import Loading from '../loading/loading';
 import {fetchFavoriteFilms} from '../../store/api-actions';
+import {getApi} from '../../store/application/selectors';
 
 function FilmLisFavorite({api}) {
 
@@ -49,7 +50,7 @@ FilmLisFavorite.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  api: state.api,
+  api: getApi(state),
 });
 
 export {FilmLisFavorite};

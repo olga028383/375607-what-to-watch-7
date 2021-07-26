@@ -10,14 +10,13 @@ const user = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
-        ...state,
         authorizationStatus: action.status,
         user: action.user,
       };
     case ActionType.LOGOUT:
       return {
-        ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
+        user: {}
       };
     default:
       return state;
