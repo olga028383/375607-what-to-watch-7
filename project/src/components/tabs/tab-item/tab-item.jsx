@@ -1,21 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link, useLocation} from 'react-router-dom';
 
-function TabItem({to, title, ...rest}) {
-  const location = useLocation();
-  const activeTab = (to === location.pathname) && 'film-nav__item--active';
-
+function TabItem({title, currentTab, onClickTab}) {
+  const activeTab = (currentTab === title) && 'film-nav__item--active';
   return (
     <li className={`film-nav__item ${activeTab}`}>
-      <Link to={to} {...rest}>{title}</Link>
+      <a href="#" className="film-nav__link" onClick={onClickTab}>{title}</a>
     </li>
   );
 }
 
 TabItem.propTypes = {
-  to: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  currentTab: PropTypes.string.isRequired,
+  onClickTab: PropTypes.func.isRequired,
 };
 
 export default TabItem;

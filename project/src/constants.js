@@ -8,8 +8,9 @@ const AppRoute = {
 };
 
 const TabsName = {
-  REVIEWS: 'reviews',
-  DETAILS: 'details',
+  OVERVIEW: 'Overview',
+  DETAILS: 'Details',
+  REVIEWS: 'Reviews',
 };
 
 const FilmsCount = {
