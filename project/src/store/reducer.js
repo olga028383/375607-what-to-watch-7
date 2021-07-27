@@ -1,57 +1,16 @@
-import {ActionType} from './action';
-import {ALL_GENRES, AuthorizationStatus} from '../constants.js';
+import {combineReducers} from 'redux';
+import {application} from './application/application';
+import {data} from './data/data';
+import {user} from './user/user';
 
-const initialState = {
-  genre: ALL_GENRES,
-  films: [],
-  promo: {},
-  user: {},
-  isDataLoaded: false,
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
-  api: {},
+export const NameSpace = {
+  DATA: 'DATA',
+  APPLICATION: 'APPLICATION',
+  USER: 'USER',
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.CHANGE_GENRE:
-      return {
-        ...state,
-        genre: action.payload,
-      };
-    case ActionType.SET_FILMS:
-      return {
-        ...state,
-        films: action.payload,
-      };
-    case ActionType.LOAD_DATA:
-      return {
-        ...state,
-        isDataLoaded: true,
-      };
-    case ActionType.SET_FILM_PROMO:
-      return {
-        ...state,
-        promo: action.payload,
-      };
-    case ActionType.REQUIRED_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.status,
-        user: action.user,
-      };
-    case ActionType.LOGOUT:
-      return {
-        ...state,
-        authorizationStatus: AuthorizationStatus.NO_AUTH,
-      };
-    case ActionType.GET_API:
-      return {
-        ...state,
-        api: action.payload,
-      };
-    default:
-      return state;
-  }
-};
-
-export {reducer};
+export default combineReducers({
+  [NameSpace.DATA]: data,
+  [NameSpace.APPLICATION]: application,
+  [NameSpace.USER]: user,
+});

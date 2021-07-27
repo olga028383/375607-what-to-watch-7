@@ -5,8 +5,9 @@ import {connect} from 'react-redux';
 
 import RatingField from './rating-field/rating-field.jsx';
 import {sendComment} from '../../store/api-actions';
-import {ActionCreator} from '../../store/action';
+import {redirect} from '../../store/action';
 import {COUNT_RATING, ApiRoute} from '../../constants.js';
+import {getApi} from '../../store/application/selectors';
 
 const MIN_LENGTH_COMMENT = 50;
 const MAX_LENGTH_COMMENT = 400;
@@ -123,12 +124,12 @@ FormReview.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  api: state.api,
+  api: getApi(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onRedirectFilm(data) {
-    dispatch(ActionCreator.redirect(data));
+    dispatch(redirect(data));
   },
 });
 

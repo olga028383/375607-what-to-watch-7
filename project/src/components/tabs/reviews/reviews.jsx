@@ -1,11 +1,39 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
+import {useParams} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import Review from '../../review/review';
-import reviewProp from '../../review/review.prop.js';
+import Loading from '../../loading/loading';
+import {fetchComments} from '../../../store/api-actions';
+import {getApi} from '../../../store/application/selectors';
 
-function Reviews({comments}) {
+function Reviews({api}) {
+  const params = useParams();
+
+  const [data, setData] = useState({
+    comments: [],
+    isLoading: false,
+  });
+
+  const {comments, isLoading} = data;
   const countComments = Math.ceil(comments.length / 2);
+
+  useEffect(() => {
+    fetchComments(params.id, api)
+      .then((commentsData) => {
+        setData({
+          comments: commentsData,
+          isLoading: true,
+        });
+      });
+  }, [params.id]);
+
+  if (!isLoading) {
+    return (
+      <Loading/>
+    );
+  }
 
   return (
     <div className="film-card__reviews film-card__row">
@@ -22,8 +50,14 @@ function Reviews({comments}) {
   );
 }
 
+
 Reviews.propTypes = {
-  comments: PropTypes.arrayOf(reviewProp).isRequired,
+  api: PropTypes.func.isRequired,
 };
 
-export default Reviews;
+const mapStateToProps = (state) => ({
+  api: getApi(state),
+});
+
+export {Reviews};
+export default connect(mapStateToProps, null)(Reviews);

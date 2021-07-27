@@ -17,10 +17,9 @@ import PrivateRouteTotal from '../private-route/private-route-total/private-rout
 
 import {AppRoute} from '../../constants.js';
 
-import filmProp from '../film/film.prop.js';
-import reviewProp from '../review/review.prop.js';
+import {getIsLoadData} from '../../store/data/selectors';
 
-function App({films, isDataLoaded, comments}) {
+function App({isDataLoaded}) {
   if (!isDataLoaded) {
     return (
       <Loading/>
@@ -32,22 +31,20 @@ function App({films, isDataLoaded, comments}) {
       <Switch>
         <PrivateRouteLogin exact path={AppRoute.LOGIN} render={() => <SingIn/>}></PrivateRouteLogin>
         <Route exact path={AppRoute.ROOT}>
-          <Home
-            films={films}
-          />
+          <Home/>
         </Route>
-        <PrivateRouteTotal exact path={AppRoute.MY_LIST} render={() => <MyList films={films}/>} />
+        <PrivateRouteTotal exact path={AppRoute.MY_LIST} render={() => <MyList/>}/>
         <Route
           exact
           path={AppRoute.FILM_DETAIL}
-          render={({match}) => <FilmDetail films={films} comments={comments}/>}
+          render={({match}) => <FilmDetail/>}
         >
         </Route>
-        <PrivateRouteTotal exact path={AppRoute.REVIEW} render={({match}) => <Review film={films.find((film) => film.id === Number(match.params.id))}/>} />
+        <PrivateRouteTotal exact path={AppRoute.REVIEW} render={() => <Review/>}/>
         <Route
           exact
           path={AppRoute.PLAYER}
-          render={({match}) => <Player film={films.find((film) => film.id === Number(match.params.id))}/>}
+          render={({match}) => <Player/>}
         >
         </Route>
         <Route>
@@ -59,14 +56,11 @@ function App({films, isDataLoaded, comments}) {
 }
 
 App.propTypes = {
-  films: PropTypes.arrayOf(filmProp).isRequired,
-  comments: PropTypes.arrayOf(reviewProp).isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
-  isDataLoaded: state.isDataLoaded,
+  isDataLoaded: getIsLoadData(state),
 });
 
 export {App};

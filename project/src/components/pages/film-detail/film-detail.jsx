@@ -4,7 +4,7 @@ import {useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import Loading from '../../loading/loading';
-import FilmList from '../../film-list/film-list';
+import FilmListSimilar from '../../film-list-similar/film-list-similar';
 import Header from '../../header/header';
 import Footer from '../../footer/footer';
 import User from '../../header/user/user';
@@ -12,36 +12,34 @@ import Tabs from '../../tabs/tabs';
 import FilmInfo from './film-info/film-info';
 import NotFound from '../../not-found/not-found';
 
-import {fetchFilm, fetchComments, fetchSimilarFilms} from '../../../store/api-actions';
+import {fetchFilm} from '../../../store/api-actions';
+import {getApi} from '../../../store/application/selectors';
 
 function FilmDetail({api}) {
   const params = useParams();
 
   const [data, setData] = useState({
     film: {},
-    comments: [],
-    similar: [],
-    isLoading: false,
     isPage: true,
+    isLoading: false,
   });
 
-  const {film, comments, similar, isLoading, isPage} = data;
+  const {film, isLoading, isPage} = data;
   const {name, backgroundImage, posterImage} = film;
 
-  useEffect(() => {
+  const onSetFilm = (filmData) => {
+    setData({
+      ...data,
+      film: filmData,
+    });
+  };
 
-    Promise
-      .all([
-        fetchFilm(params.id, api),
-        fetchComments(params.id, api),
-        fetchSimilarFilms(params.id, api),
-      ])
-      .then(([filmData, commentsData, similarData]) => {
+  useEffect(() => {
+    fetchFilm(params.id, api)
+      .then((filmData) => {
         setData({
           ...data,
           film: filmData,
-          comments: commentsData,
-          similar: similarData,
           isLoading: true,
         });
       })
@@ -79,7 +77,7 @@ function FilmDetail({api}) {
             <User/>
           </Header>
 
-          <FilmInfo film={film}/>
+          <FilmInfo film={film} onSetFilm={onSetFilm}/>
 
         </div>
 
@@ -91,7 +89,7 @@ function FilmDetail({api}) {
 
             <div className="film-card__desc">
 
-              <Tabs film={film} comments={comments}/>
+              <Tabs film={film}/>
 
             </div>
           </div>
@@ -99,12 +97,8 @@ function FilmDetail({api}) {
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={similar} count={similar.length}/>
-
-        </section>
+        <FilmListSimilar/>
 
         <Footer/>
       </div>
@@ -117,7 +111,7 @@ FilmDetail.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  api: state.api,
+  api: getApi(state),
 });
 
 export {FilmDetail};

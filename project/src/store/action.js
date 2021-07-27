@@ -1,46 +1,52 @@
-
 export const ActionType = {
-  CHANGE_GENRE: 'filter/changeGenre',
   SET_FILMS: 'data/setFilms',
   SET_FILM_PROMO: 'data/setFilmPromo',
-  LOAD_DATA: 'data/loadData',
+  SET_IS_LOAD_DATA: 'data/loadData',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
-  REDIRECT_TO_ROUTER: 'redirect',
-  GET_API: 'getApi',
+  CHANGE_GENRE: 'application/changeGenre',
+  REDIRECT_TO_ROUTER: 'application/redirect',
+  GET_API: 'application/getApi',
 };
 
-export const ActionCreator = {
-  changeGenre: (genre) => ({
-    type: ActionType.CHANGE_GENRE,
-    payload: genre,
-  }),
-  setFilms: (films) => ({
-    type: ActionType.SET_FILMS,
-    payload : films,
-  }),
-  setFilmPromo: (film) => ({
-    type: ActionType.SET_FILM_PROMO,
-    payload : film,
-  }),
-  loadData: () => ({
-    type: ActionType.LOAD_DATA,
-    payload: true,
-  }),
-  requireAuthorization: (status, user) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    status: status,
-    user: user,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  setApi: (api) => ({
-    type: ActionType.GET_API,
-    payload: api,
-  }),
-  redirect: (url) =>({
-    type: ActionType.REDIRECT_TO_ROUTER,
-    payload: url,
-  }),
-};
+const changeGenre = (genre) => ({
+  type: ActionType.CHANGE_GENRE,
+  payload: genre,
+});
+
+const setFilms = (films) => ({
+  type: ActionType.SET_FILMS,
+  payload: films,
+});
+
+const setFilmPromo = (film) => ({
+  type: ActionType.SET_FILM_PROMO,
+  payload: film,
+});
+
+const loadData = () => ({
+  type: ActionType.SET_IS_LOAD_DATA,
+  payload: true,
+});
+
+const requireAuthorization = (status, user) => ({
+  type: ActionType.REQUIRED_AUTHORIZATION,
+  status: status,
+  user: user,
+});
+
+const logout = () => ({
+  type: ActionType.LOGOUT,
+});
+
+const setApi = (api) => ({
+  type: ActionType.GET_API,
+  payload: api,
+});
+
+const redirect = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTER,
+  payload: url,
+});
+
+export {changeGenre, setFilms, setFilmPromo, loadData, requireAuthorization, logout, setApi, redirect};

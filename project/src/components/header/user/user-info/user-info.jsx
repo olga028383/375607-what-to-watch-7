@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import userProp from '../user.prop.js';
 import {logout} from '../../../../store/api-actions';
 import {AppRoute} from '../../../../constants';
+import {getUser} from '../../../../store/user/selectors';
 
 function UserInfo({user, onLogout}) {
   const {avatar = '', email = ''} = user;
@@ -29,7 +30,7 @@ UserInfo.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: getUser(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
