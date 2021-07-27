@@ -16,7 +16,7 @@ const user = (state = initialState, action) => {
     case ActionType.LOGOUT:
       return {
         authorizationStatus: AuthorizationStatus.NO_AUTH,
-        user: {}
+        user: {},
       };
     default:
       return state;
