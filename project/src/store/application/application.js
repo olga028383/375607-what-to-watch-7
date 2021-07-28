@@ -1,5 +1,5 @@
 import {ActionType} from '../action';
-import {ALL_GENRES} from '../../constants.js';
+import {ALL_GENRES} from '../../constants';
 
 const initialState = {
   genre: ALL_GENRES,

@@ -10,7 +10,7 @@ import filmProp from '../film/film.prop.js';
 import {getApi} from '../../store/application/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
-function FavoriteButton({film, isPromo = false, api, authorizationStatus, onSetFilmPromo, onSetFilm}) {
+function FavoriteButton({film, isPromo = false, setApi, authorizationStatus, setFilmPromo, setFilm}) {
   const {id, isFavorite} = film;
   const history = useHistory();
 
@@ -20,14 +20,14 @@ function FavoriteButton({film, isPromo = false, api, authorizationStatus, onSetF
       history.push(AppRoute.MY_LIST);
     }
 
-    addFavoriteFilm(id, isFavorite ? 0 : 1, api)
+    addFavoriteFilm(id, isFavorite ? 0 : 1, setApi)
       .then((data) => {
         if (isPromo) {
-          onSetFilmPromo(data);
+          setFilmPromo(data);
           return;
         }
 
-        onSetFilm(data);
+        setFilm(data);
       });
   };
 
@@ -52,20 +52,20 @@ function FavoriteButton({film, isPromo = false, api, authorizationStatus, onSetF
 FavoriteButton.propTypes = {
   film: filmProp,
   isPromo: PropTypes.bool,
-  api: PropTypes.func.isRequired,
+  setApi: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  onSetFilmPromo: PropTypes.func.isRequired,
-  onSetFilm: PropTypes.func,
+  setFilmPromo: PropTypes.func.isRequired,
+  setFilm: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSetFilmPromo(promo) {
+  setFilmPromo(promo) {
     dispatch(setFilmPromo(promo));
   },
 });
 
 const mapStateToProps = (state) => ({
-  api: getApi(state),
+  setApi: getApi(state),
   authorizationStatus: getAuthorizationStatus(state),
 });
 

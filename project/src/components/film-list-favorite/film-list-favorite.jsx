@@ -7,7 +7,7 @@ import Loading from '../loading/loading';
 import {fetchFavoriteFilms} from '../../store/api-actions';
 import {getApi} from '../../store/application/selectors';
 
-function FilmLisFavorite({api}) {
+function FilmLisFavorite({setApi}) {
 
   const [data, setData] = useState({
     favorite: [],
@@ -17,7 +17,7 @@ function FilmLisFavorite({api}) {
   const {favorite, isLoading} = data;
 
   useEffect(() => {
-    fetchFavoriteFilms(api)
+    fetchFavoriteFilms(setApi)
       .then((favoriteData) => {
 
         setData({
@@ -46,11 +46,11 @@ function FilmLisFavorite({api}) {
 
 
 FilmLisFavorite.propTypes = {
-  api: PropTypes.func.isRequired,
+  setApi: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  api: getApi(state),
+  setApi: getApi(state),
 });
 
 export {FilmLisFavorite};

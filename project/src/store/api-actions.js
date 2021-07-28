@@ -12,12 +12,15 @@ export const fetchFilm = (id, api) => (
     .then(({data}) => adaptToClientFilm(data))
 );
 
-export const fetchComments = (filmId, api) => (
-  api.get(`${ApiRoute.COMMENTS}/${filmId}`)
-    .then(({data}) =>  data.map(adaptToClientComment))
+export const fetchFilmPromo = (api) => (
+  api.get(ApiRoute.FILM_PROMO)
+    .then(({data}) => adaptToClientFilm(data))
 );
 
-export const sendComment = (rating, comment, filmId, api) => api.post(`${ApiRoute.COMMENTS}/${filmId}`, {rating, comment});
+export const fetchComments = (filmId, api) => (
+  api.get(`${ApiRoute.COMMENTS}/${filmId}`)
+    .then(({data}) => data.map(adaptToClientComment))
+);
 
 export const fetchSimilarFilms = (filmId, api) => (
   api.get(`${ApiRoute.FILMS}/${filmId}${ApiRoute.SIMILAR}`)
@@ -29,17 +32,21 @@ export const fetchFavoriteFilms = (api) => (
     .then(({data}) => data.map(adaptToClientFilm))
 );
 
-export const addFavoriteFilm = (filmId, status, api) => api.post(`${ApiRoute.FAVORITE}/${filmId}/${status}`).then(({data}) => adaptToClientFilm(data));
-
-export const fetchFilmPromo = (api) => (
-  api.get(ApiRoute.FILM_PROMO)
-    .then(({data}) => adaptToClientFilm(data))
-);
-
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
     .then(({data}) => dispatch(requireAuthorization(AuthorizationStatus.AUTH, adaptToClientUser(data))))
-    .catch(() => {})
+    .catch(() => {
+    })
+);
+
+export const sendComment = (rating, comment, filmId, api) => (
+  api.post(`${ApiRoute.COMMENTS}/${filmId}`, {rating, comment})
+    .then(({data}) => data.map(adaptToClientComment))
+);
+
+export const addFavoriteFilm = (filmId, status, api) => (
+  api.post(`${ApiRoute.FAVORITE}/${filmId}/${status}`)
+    .then(({data}) => adaptToClientFilm(data))
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
@@ -49,7 +56,8 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
       dispatch(requireAuthorization(AuthorizationStatus.AUTH, adaptToClientUser(data)));
       dispatch(redirect(AppRoute.ROOT));
     })
-    .catch(() => {})
+    .catch(() => {
+    })
 );
 
 export const logout = () => (dispatch, _getState, api) => (

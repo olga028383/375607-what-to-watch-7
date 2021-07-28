@@ -8,7 +8,7 @@ import Loading from '../loading/loading';
 import {fetchSimilarFilms} from '../../store/api-actions';
 import {getApi} from '../../store/application/selectors';
 
-function FilmListSimilar({api}) {
+function FilmListSimilar({setApi}) {
   const params = useParams();
 
   const [data, setData] = useState({
@@ -19,7 +19,7 @@ function FilmListSimilar({api}) {
   const {similar, isLoading} = data;
 
   useEffect(() => {
-    fetchSimilarFilms(params.id, api)
+    fetchSimilarFilms(params.id, setApi)
       .then((similarData) => {
         setData({
           similar: similarData,
@@ -47,11 +47,11 @@ function FilmListSimilar({api}) {
 
 
 FilmListSimilar.propTypes = {
-  api: PropTypes.func.isRequired,
+  setApi: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  api: getApi(state),
+  setApi: getApi(state),
 });
 
 export {FilmListSimilar};
