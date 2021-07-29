@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Router as BrowserRouter} from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
+import browserHistory from './browser-history';
 
 import {createApi} from './api';
 import {fetchFilms, fetchFilmPromo, checkAuth} from './store/api-actions';
@@ -40,7 +42,9 @@ Promise
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App/>
+      <BrowserRouter history={browserHistory}>
+        <App/>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
-import browserHistory from '../../browser-history';
+import {Switch, Route} from 'react-router-dom';
 
 import Home from '../pages/home/home';
 import MyList from '../pages/my-list/my-list';
@@ -27,31 +26,29 @@ function App({isDataLoaded}) {
   }
 
   return (
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <PrivateRouteLogin exact path={AppRoute.LOGIN} render={() => <SingIn/>}></PrivateRouteLogin>
-        <Route exact path={AppRoute.ROOT}>
-          <Home/>
-        </Route>
-        <PrivateRouteTotal exact path={AppRoute.MY_LIST} render={() => <MyList/>}/>
-        <Route
-          exact
-          path={AppRoute.FILM_DETAIL}
-          render={({match}) => <FilmDetail/>}
-        >
-        </Route>
-        <PrivateRouteTotal exact path={AppRoute.REVIEW} render={() => <Review/>}/>
-        <Route
-          exact
-          path={AppRoute.PLAYER}
-          render={({match}) => <Player/>}
-        >
-        </Route>
-        <Route>
-          <NotFound/>
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <PrivateRouteLogin exact path={AppRoute.LOGIN} render={() => <SingIn/>}></PrivateRouteLogin>
+      <Route exact path={AppRoute.ROOT}>
+        <Home/>
+      </Route>
+      <PrivateRouteTotal exact path={AppRoute.MY_LIST} render={() => <MyList/>}/>
+      <Route
+        exact
+        path={AppRoute.FILM_DETAIL}
+        render={({match}) => <FilmDetail/>}
+      >
+      </Route>
+      <PrivateRouteTotal exact path={AppRoute.REVIEW} render={() => <Review/>}/>
+      <Route
+        exact
+        path={AppRoute.PLAYER}
+        render={({match}) => <Player/>}
+      >
+      </Route>
+      <Route>
+        <NotFound/>
+      </Route>
+    </Switch>
   );
 }
 

@@ -21,7 +21,7 @@ const ErrorsForm = {
 
 const checkLengthReview = (comment) => comment.length > MIN_LENGTH_COMMENT && comment.length <= MAX_LENGTH_COMMENT;
 
-function FormReview({api, onRedirectFilm}) {
+function FormReview({setApi, onRedirectFilm}) {
   const params = useParams();
 
   const [data, setData] = useState({
@@ -53,7 +53,7 @@ function FormReview({api, onRedirectFilm}) {
       return;
     }
 
-    sendComment(rating, comment, params.id, api)
+    sendComment(rating, comment, params.id, setApi)
       .then(() => onRedirectFilm(`${ApiRoute.FILMS}/${params.id}`))
       .catch(() => {
         setData({
@@ -119,12 +119,12 @@ function FormReview({api, onRedirectFilm}) {
 }
 
 FormReview.propTypes = {
-  api: PropTypes.func.isRequired,
+  setApi: PropTypes.func.isRequired,
   onRedirectFilm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  api: getApi(state),
+  setApi: getApi(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
