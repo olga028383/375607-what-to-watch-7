@@ -1,7 +1,7 @@
 import {
   changeGenre,
   setFilms,
-  setFilmPromo,
+  setFilmPromoAction,
   loadData,
   requireAuthorization,
   logout,
@@ -49,7 +49,7 @@ describe('Actions', () => {
 
     const film = {id: 1, name: 'Name 1'};
 
-    expect(setFilmPromo(film)).toEqual(expectedAction);
+    expect(setFilmPromoAction(film)).toEqual(expectedAction);
   });
 
   it('Action creator for data load.', () => {
