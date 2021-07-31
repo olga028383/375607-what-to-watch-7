@@ -7,7 +7,7 @@ import RatingField from './rating-field/rating-field.jsx';
 import {sendComment} from '../../store/api-actions';
 import {redirect} from '../../store/action';
 import {COUNT_RATING, ApiRoute} from '../../constants.js';
-import {getApi} from '../../store/application/selectors';
+import {getActionApi} from '../../store/application/selectors';
 
 const MIN_LENGTH_COMMENT = 50;
 const MAX_LENGTH_COMMENT = 400;
@@ -21,7 +21,7 @@ const ErrorsForm = {
 
 const checkLengthReview = (comment) => comment.length > MIN_LENGTH_COMMENT && comment.length <= MAX_LENGTH_COMMENT;
 
-function FormReview({setApi, onRedirectFilm}) {
+function FormReview({getApi, onRedirectFilm}) {
   const params = useParams();
 
   const [data, setData] = useState({
@@ -53,7 +53,7 @@ function FormReview({setApi, onRedirectFilm}) {
       return;
     }
 
-    sendComment(rating, comment, params.id, setApi)
+    sendComment(rating, comment, params.id, getApi)
       .then(() => onRedirectFilm(`${ApiRoute.FILMS}/${params.id}`))
       .catch(() => {
         setData({
@@ -119,12 +119,12 @@ function FormReview({setApi, onRedirectFilm}) {
 }
 
 FormReview.propTypes = {
-  setApi: PropTypes.func.isRequired,
+  getApi: PropTypes.func.isRequired,
   onRedirectFilm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  setApi: getApi(state),
+  getApi: getActionApi(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -35,12 +35,12 @@ describe('Component: GenreItem', () => {
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {}},
       DATA: {isDataLoaded: true, films: [film, film], promo: film},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
+      APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
 
     fakeApp = (
       <Provider store={store}>
-        <GenreList onClickGenre={() => {}}/>
+        <GenreList onClickGenre={jest.fn()}/>
       </Provider>
     );
   });

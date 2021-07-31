@@ -19,7 +19,7 @@ const setFilms = (films) => ({
   payload: films,
 });
 
-const setFilmPromo = (film) => ({
+const setFilmPromoAction = (film) => ({
   type: ActionType.SET_FILM_PROMO,
   payload: film,
 });
@@ -49,4 +49,4 @@ const redirect = (url) => ({
   payload: url,
 });
 
-export {changeGenre, setFilms, setFilmPromo, loadData, requireAuthorization, logout, setApi, redirect};
+export {changeGenre, setFilms, setFilmPromoAction, loadData, requireAuthorization, logout, setApi, redirect};

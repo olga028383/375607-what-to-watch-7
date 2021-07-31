@@ -6,9 +6,9 @@ import {connect} from 'react-redux';
 import FilmList from '../film-list/film-list';
 import Loading from '../loading/loading';
 import {fetchSimilarFilms} from '../../store/api-actions';
-import {getApi} from '../../store/application/selectors';
+import {getActionApi} from '../../store/application/selectors';
 
-function FilmListSimilar({setApi}) {
+function FilmListSimilar({getApi}) {
   const params = useParams();
 
   const [data, setData] = useState({
@@ -19,7 +19,7 @@ function FilmListSimilar({setApi}) {
   const {similar, isLoading} = data;
 
   useEffect(() => {
-    fetchSimilarFilms(params.id, setApi)
+    fetchSimilarFilms(params.id, getApi)
       .then((similarData) => {
         setData({
           similar: similarData,
@@ -47,11 +47,11 @@ function FilmListSimilar({setApi}) {
 
 
 FilmListSimilar.propTypes = {
-  setApi: PropTypes.func.isRequired,
+  getApi: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  setApi: getApi(state),
+  getApi: getActionApi(state),
 });
 
 export {FilmListSimilar};

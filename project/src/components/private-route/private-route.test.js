@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
 import PrivateRoute from './private-route';
 import configureStore from 'redux-mock-store';
-import {ALL_GENRES, AppRoute, AuthorizationStatus} from '../../constants';
+import {AppRoute, AuthorizationStatus} from '../../constants';
 
 
 let fakeApp = null;
@@ -19,8 +19,6 @@ describe('Component: PrivateRoute', () => {
     const createFakeStore = configureStore({});
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {}},
-      DATA: {isDataLoaded: true, films: [], promo: {}},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
     });
 
     fakeApp = (

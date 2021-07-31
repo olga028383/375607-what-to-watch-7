@@ -5,7 +5,7 @@ import User from './user';
 import configureStore from 'redux-mock-store';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import {ALL_GENRES, AuthorizationStatus} from '../../../constants';
+import {AuthorizationStatus} from '../../../constants';
 
 let fakeApp = null;
 let fakeAppWithUser = null;
@@ -23,14 +23,10 @@ describe('Component: User', () => {
         authorizationStatus: AuthorizationStatus.AUTH,
         user: {id: 1, email: 'katy@mail.ru', avatar: '', name: 'Katy', token: ''},
       },
-      DATA: {isDataLoaded: true, films: [], promo: {}},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
     });
 
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.NO_AUTH, user: {}},
-      DATA: {isDataLoaded: true, films: [], promo: {}},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
     });
 
     fakeAppWithUser = (

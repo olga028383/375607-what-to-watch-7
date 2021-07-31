@@ -39,9 +39,9 @@ describe('Component: Film', () => {
   });
 
   it('should display movie card', () => {
-
     render(fakeApp);
 
     expect(screen.getByText(/The Grand Budapest Hotel/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/The Grand Budapest Hotel/i)).toBeInTheDocument();
   });
 });

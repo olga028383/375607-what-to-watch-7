@@ -39,7 +39,7 @@ describe('Component: Home', () => {
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH,  user: {id: 1, email: 'katy@mail.ru', avatar: '', name: 'Katy', token: ''}},
       DATA: {isDataLoaded: true, films: [], promo: film},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
+      APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
 
     fakeApp = (

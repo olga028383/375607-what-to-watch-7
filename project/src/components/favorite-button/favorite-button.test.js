@@ -25,9 +25,6 @@ const film = {
   isFavorite: false,
 };
 
-const onSetFilm = () => {
-};
-
 const createFakeStore = configureStore({});
 
 let store = null;
@@ -37,19 +34,18 @@ describe('Component: FavoriteButton', () => {
   beforeAll(() => {
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {}},
-      DATA: {isDataLoaded: true, films: [film, film], promo: film},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
+      DATA: {isDataLoaded: true, films: [film], promo: film},
+      APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
 
     fakeApp = (
       <Provider store={store}>
-        <FavoriteButton film={film} isPromo onSetFilm={onSetFilm}/>
+        <FavoriteButton film={film} isPromo onSetFilm={jest.fn()}/>
       </Provider>
     );
   });
 
   it('should display favorite button', () => {
-
     render(fakeApp);
 
     expect(screen.getByText(/My list/i)).toBeInTheDocument();

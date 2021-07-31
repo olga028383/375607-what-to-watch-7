@@ -5,12 +5,12 @@ import {useHistory} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 import {addFavoriteFilm} from '../../store/api-actions';
 import {isCheckAuth} from '../../util';
-import {setFilmPromo} from '../../store/action';
+import {setFilmPromoAction} from '../../store/action';
 import filmProp from '../film/film.prop.js';
-import {getApi} from '../../store/application/selectors';
+import {getActionApi} from '../../store/application/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
-function FavoriteButton({film, isPromo = false, setApi, authorizationStatus, setFilmPromo, setFilm}) {
+function FavoriteButton({film, isPromo = false, getApi, authorizationStatus, setFilmPromo, setFilm}) {
   const {id, isFavorite} = film;
   const history = useHistory();
 
@@ -20,7 +20,7 @@ function FavoriteButton({film, isPromo = false, setApi, authorizationStatus, set
       history.push(AppRoute.MY_LIST);
     }
 
-    addFavoriteFilm(id, isFavorite ? 0 : 1, setApi)
+    addFavoriteFilm(id, isFavorite ? 0 : 1, getApi)
       .then((data) => {
         if (isPromo) {
           setFilmPromo(data);
@@ -52,7 +52,7 @@ function FavoriteButton({film, isPromo = false, setApi, authorizationStatus, set
 FavoriteButton.propTypes = {
   film: filmProp,
   isPromo: PropTypes.bool,
-  setApi: PropTypes.func.isRequired,
+  getApi: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   setFilmPromo: PropTypes.func.isRequired,
   setFilm: PropTypes.func,
@@ -60,12 +60,12 @@ FavoriteButton.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   setFilmPromo(promo) {
-    dispatch(setFilmPromo(promo));
+    dispatch(setFilmPromoAction(promo));
   },
 });
 
 const mapStateToProps = (state) => ({
-  setApi: getApi(state),
+  getApi: getActionApi(state),
   authorizationStatus: getAuthorizationStatus(state),
 });
 

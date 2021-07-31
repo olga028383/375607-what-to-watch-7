@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import {ALL_GENRES, AuthorizationStatus} from '../../../../constants';
+import {AuthorizationStatus} from '../../../../constants';
 import UserInfo from './user-info';
 
 let fakeApp = null;
@@ -18,8 +18,6 @@ describe('Component: UserInfo', () => {
     const createFakeStore = configureStore({});
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {id: 1, email: 'katy@mail.ru', avatar: '', name: 'Katy', token: ''}},
-      DATA: {isDataLoaded: true, films: [], promo: {}},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
     });
 
     fakeApp = (
@@ -32,7 +30,6 @@ describe('Component: UserInfo', () => {
   });
 
   it('should display user info', () => {
-
     render(fakeApp);
 
     expect(screen.getByText(/katy@mail.ru/i)).toBeInTheDocument();

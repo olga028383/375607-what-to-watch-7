@@ -39,13 +39,13 @@ describe('Component: FilmInfo, Page FilmDetail', () => {
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {}},
       DATA: {isDataLoaded: true, films: [], promo: {}},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
+      APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
 
     fakeApp = (
       <Provider store={store}>
         <Router history={history}>
-          <FilmInfo film={film} onSetFilm={() => {}}/>
+          <FilmInfo film={film} onSetFilm={jest.fn()}/>
         </Router>
       </Provider>
     );

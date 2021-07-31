@@ -39,7 +39,7 @@ describe('Component: FilmListFiltered', () => {
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {}},
       DATA: {isDataLoaded: true, films: [film, film], promo: film},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
+      APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
 
     fakeApp = (
@@ -57,5 +57,10 @@ describe('Component: FilmListFiltered', () => {
 
     expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
     expect(screen.getByText(/All genres/i)).toBeInTheDocument();
+    expect(screen.getByText(/Comedy/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/The Grand Budapest Hotel/i)).toHaveLength(2);
+    screen.getAllByText(/The Grand Budapest Hotel/i).forEach((item) => {
+      expect(item).toBeInTheDocument();
+    });
   });
 });

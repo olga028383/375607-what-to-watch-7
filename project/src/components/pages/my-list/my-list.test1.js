@@ -6,7 +6,7 @@ import {createMemoryHistory} from 'history';
 import MyList from './my-list';
 import configureStore from 'redux-mock-store';
 import {ALL_GENRES, AuthorizationStatus} from '../../../constants';
-
+//Здесь оставила для след занятия, нужено будет имитировать ответ сервера
 const film = {
   id: 1,
   name: 'The Grand Budapest Hotel',
@@ -39,7 +39,7 @@ describe('Component: Home', () => {
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH,  user: {id: 1, email: 'katy@mail.ru', avatar: '', name: 'Katy', token: ''}},
       DATA: {isDataLoaded: true, films: [film, film], promo: film},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
+      APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
 
     fakeApp = (

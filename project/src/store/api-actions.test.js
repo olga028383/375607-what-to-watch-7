@@ -17,14 +17,12 @@ import {createApi} from '../api';
 import {ApiRoute, AuthorizationStatus, AppRoute} from '../constants';
 
 let api = null;
-
 let answerFilm = {};
-
 let answerFilmAdapt = {};
 
 describe('Async operations', () => {
   beforeAll(() => {
-    api = createApi(() => {});
+    api = createApi(jest.fn());
 
     answerFilm ={
       'id': 1,
@@ -72,11 +70,11 @@ describe('Async operations', () => {
 
     apiMock
       .onGet(ApiRoute.FILMS)
-      .reply(200, answerFilm);
+      .reply(200, [answerFilm]);
 
-    fetchFilms(api)
+    return fetchFilms(api)
       .then((data) => {
-        expect(data).toEqual(answerFilmAdapt);
+        expect(data).toEqual([answerFilmAdapt]);
       });
   });
 
@@ -146,12 +144,12 @@ describe('Async operations', () => {
 
     apiMock
       .onGet(`${ApiRoute.FILMS}/1${ApiRoute.SIMILAR}`)
-      .reply(200, answerFilm);
+      .reply(200, [answerFilm]);
 
 
-    fetchSimilarFilms(1, api)
+    return fetchSimilarFilms(1, api)
       .then((data) => {
-        expect(data).toEqual(answerFilmAdapt);
+        expect(data).toEqual([answerFilmAdapt]);
       });
   });
 
@@ -160,11 +158,11 @@ describe('Async operations', () => {
 
     apiMock
       .onGet(ApiRoute.FAVORITE)
-      .reply(200, answerFilm);
+      .reply(200, [answerFilm]);
 
-    fetchFavoriteFilms(api)
+    return fetchFavoriteFilms(api)
       .then((data) => {
-        expect(data).toEqual(answerFilmAdapt);
+        expect(data).toEqual([answerFilmAdapt]);
       });
   });
 
