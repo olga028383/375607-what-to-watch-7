@@ -49,6 +49,14 @@ function FilmDetail({getApi}) {
           isPage: false,
         });
       });
+
+    return () => {
+      setData({
+        film: {},
+        isPage: true,
+        isLoading: false,
+      });
+    }
   }, [params.id]);
 
   if (!isPage) {
