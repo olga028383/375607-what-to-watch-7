@@ -27,7 +27,7 @@ function App({isDataLoaded}) {
 
   return (
     <Switch>
-      <PrivateRouteLogin exact path={AppRoute.LOGIN} render={() => <SingIn/>}></PrivateRouteLogin>
+      <PrivateRouteLogin exact path={AppRoute.LOGIN} render={() => <SingIn/>} />
       <Route exact path={AppRoute.ROOT}>
         <Home/>
       </Route>
@@ -35,16 +35,11 @@ function App({isDataLoaded}) {
       <Route
         exact
         path={AppRoute.FILM_DETAIL}
-        render={({match}) => <FilmDetail/>}
+        render={() => <FilmDetail/>}
       >
       </Route>
       <PrivateRouteTotal exact path={AppRoute.REVIEW} render={() => <Review/>}/>
-      <Route
-        exact
-        path={AppRoute.PLAYER}
-        render={({match}) => <Player/>}
-      >
-      </Route>
+      <Route exact path={AppRoute.PLAYER} render={() => <Player/>}/>
       <Route>
         <NotFound/>
       </Route>

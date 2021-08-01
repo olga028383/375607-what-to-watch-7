@@ -56,8 +56,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
       dispatch(requireAuthorization(AuthorizationStatus.AUTH, adaptToClientUser(data)));
       dispatch(redirect(AppRoute.ROOT));
     })
-    .catch(() => {
-    })
+    .catch(() => {})
 );
 
 export const logout = () => (dispatch, _getState, api) => (

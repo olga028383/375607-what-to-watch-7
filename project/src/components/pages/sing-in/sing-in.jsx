@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../../header/header.jsx';
-import Footer from '../../footer/footer.jsx';
-import Form from './form/form.jsx';
+import Header from '../../header/header';
+import Footer from '../../footer/footer';
+import Form from './form/form';
 
 function SingIn() {
   return (

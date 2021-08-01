@@ -1,11 +1,18 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
-import Home from './home';
-import {ALL_GENRES, AuthorizationStatus} from '../../../constants';
+import FilmListFavorite from './film-list-favorite';
+import {ALL_GENRES, AuthorizationStatus} from '../../constants';
+import {fetchFavoriteFilms} from '../../store/api-actions';
+
+jest.mock('../../store/api-actions');
+
+let fakeApp = null;
+let history = null;
+let store = null;
 
 const film = {
   id: 1,
@@ -24,39 +31,35 @@ const film = {
   runTime: 99,
   genre: 'Comedy',
   released: 2014,
-  isFavorite: false,
+  isFavorite: true,
 };
 
-let fakeApp = null;
-let history = null;
-let store = null;
+describe('Component: FilmListFavorite', () => {
 
-describe('Component: Home', () => {
   beforeAll(() => {
     history = createMemoryHistory();
-
     const createFakeStore = configureStore({});
     store = createFakeStore({
-      USER: {authorizationStatus: AuthorizationStatus.AUTH,  user: {id: 1, email: 'katy@mail.ru', avatar: '', name: 'Katy', token: ''}},
-      DATA: {isDataLoaded: true, films: [], promo: film},
+      USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {}},
       APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
 
     fakeApp = (
       <Provider store={store}>
         <Router history={history}>
-          <Home />
+          <FilmListFavorite/>
         </Router>
       </Provider>
     );
   });
 
-  it('should display page home', () => {
-
+  it('there must be a correct render FilmListFavorite', async () => {
+    fetchFavoriteFilms.mockReturnValue(Promise.resolve([film]));
     render(fakeApp);
 
-    expect(screen.getByText(/Comedy/i)).toBeInTheDocument();
-    expect(screen.getByText(/My List/i)).toBeInTheDocument();
-    expect(screen.getByText(/Play/i)).toBeInTheDocument();
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    expect(await screen.findByText(/catalog/i)).toBeInTheDocument();
+    expect(await screen.findByText(/The Grand Budapest Hotel/i)).toBeInTheDocument();
+
   });
 });

@@ -5,7 +5,7 @@ import {changeGenre} from '../../../store/action';
 import {getGenre} from '../../../store/application/selectors';
 
 function GenreItem({genre, onChangeGenre, onClickGenre, name}) {
-  const activeItem = (name === genre) && 'catalog__genres-item--active';
+  const activeItem = (name === genre) ? 'catalog__genres-item--active' : '';
   return (
     <li className={`catalog__genres-item ${activeItem}`}>
       <a href="#" className="catalog__genres-link" onClick={(evt) => {

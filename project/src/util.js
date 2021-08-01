@@ -1,4 +1,4 @@
-import {MIN_TIME, ALL_GENRES, AuthorizationStatus, TEN, MIN_LENGTH_COMMENT, MAX_LENGTH_COMMENT} from './constants.js';
+import {MIN_TIME, ALL_GENRES, AuthorizationStatus, TEN, MIN_LENGTH_COMMENT, MAX_LENGTH_COMMENT, Ratings} from './constants';
 
 const getLengthTimeFormat = (numeric) => {
   if (!numeric) {
@@ -26,9 +26,9 @@ const getLengthTimeVideoFormat = (numeric) => {
     return '';
   }
 
-  const hours = Math.floor(numeric / (MIN_TIME * MIN_TIME));
-  const minutes = Math.floor(numeric / MIN_TIME - hours);
-  const seconds = Math.floor(numeric - minutes * 60);
+  const hours = Math.floor(numeric / 3600);
+  const minutes = Math.floor(numeric % 3600 / 60);
+  const seconds = Math.floor(numeric % 3600 % 60);
 
   const hoursValue = getUnitTimeFormat(hours);
   const minutesValue = getUnitTimeFormat(minutes);
@@ -51,4 +51,27 @@ const isValidateEmail = (email) => /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-
 
 const checkLengthReview = (comment) => comment.length > MIN_LENGTH_COMMENT && comment.length <= MAX_LENGTH_COMMENT;
 
-export {getLengthTimeFormat, getFilterFilms, isCheckAuth, isValidateEmail, getLengthTimeVideoFormat, getUnitTimeFormat, checkLengthReview};
+const showRatingText = (rating) => {
+  if (rating > 0 && rating < 3) {
+    return Ratings.BAD;
+  } else if (rating >= 3 && rating < 5) {
+    return Ratings.NORMAL;
+  } else if (rating >= 5 && rating < 8) {
+    return Ratings.GOOD;
+  } else if (rating >= 8 && rating < 10) {
+    return Ratings.VERY_GOOD;
+  } else {
+    return Ratings.AWESOME;
+  }
+};
+
+export {
+  getLengthTimeFormat,
+  getFilterFilms,
+  isCheckAuth,
+  isValidateEmail,
+  getLengthTimeVideoFormat,
+  getUnitTimeFormat,
+  checkLengthReview,
+  showRatingText
+};

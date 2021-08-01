@@ -1,8 +1,9 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
-import GenreItem from './genre-item';
 import configureStore from 'redux-mock-store';
+import userEvent from '@testing-library/user-event';
+import GenreItem from './genre-item';
 import {ALL_GENRES, AuthorizationStatus} from '../../../constants';
 
 const film = {
@@ -24,7 +25,7 @@ const film = {
   released: 2014,
   isFavorite: false,
 };
-
+const onClickGenre = jest.fn();
 let fakeApp = null;
 let store = null;
 
@@ -34,13 +35,13 @@ describe('Component: GenreItem', () => {
     const createFakeStore = configureStore({});
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {}},
-      DATA: {isDataLoaded: true, films: [film, film], promo: film},
-      APPLICATION: {genre: ALL_GENRES, api: () => {}},
+      DATA: {isDataLoaded: true, films: [film], promo: {}},
+      APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
 
     fakeApp = (
       <Provider store={store}>
-        <GenreItem name={'Comedy'} onClickGenre={() => {}}/>
+        <GenreItem name={'Comedy'} onClickGenre={onClickGenre}/>
       </Provider>
     );
   });
@@ -48,7 +49,17 @@ describe('Component: GenreItem', () => {
   it('should display genre item', () => {
 
     render(fakeApp);
-
     expect(screen.getByText(/Comedy/i)).toBeInTheDocument();
+
+  });
+
+  it('the click should be processed', () => {
+    const {container} = render(fakeApp);
+
+    expect(container.querySelector('.catalog__genres-item--active')).not.toBeInTheDocument();
+
+    userEvent.click(screen.getByText(/Comedy/i));
+    expect(onClickGenre).toHaveBeenCalled();
+
   });
 });

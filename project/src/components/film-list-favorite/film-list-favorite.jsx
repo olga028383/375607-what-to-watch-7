@@ -19,7 +19,6 @@ function FilmLisFavorite({getApi}) {
   useEffect(() => {
     fetchFavoriteFilms(getApi)
       .then((favoriteData) => {
-
         setData({
           favorite: favoriteData,
           isLoading: true,
