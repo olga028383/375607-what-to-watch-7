@@ -7,21 +7,17 @@ import RatingField from './rating-field/rating-field.jsx';
 import {sendComment} from '../../store/api-actions';
 import {redirect} from '../../store/action';
 import {COUNT_RATING, ApiRoute} from '../../constants.js';
-import {getApi} from '../../store/application/selectors';
+import {getActionApi} from '../../store/application/selectors';
+import {checkLengthReview} from '../../util';
 
-const MIN_LENGTH_COMMENT = 50;
-const MAX_LENGTH_COMMENT = 400;
 const MAX_SHOW_TIME_SERVER_ERROR = 2000;
 
 const ErrorsForm = {
-  RATING: 'Пожалуйста, выставите оценку',
   COMMENT: 'Длина комментария минимум 50 символов и максимум 400',
   SERVER: 'Произошла ошибка отправки данных, пожалуйста, попробуйте отправить еще раз через некоторое время',
 };
 
-const checkLengthReview = (comment) => comment.length > MIN_LENGTH_COMMENT && comment.length <= MAX_LENGTH_COMMENT;
-
-function FormReview({api, onRedirectFilm}) {
+function FormReview({getApi, onRedirectFilm}) {
   const params = useParams();
 
   const [data, setData] = useState({
@@ -53,7 +49,7 @@ function FormReview({api, onRedirectFilm}) {
       return;
     }
 
-    sendComment(rating, comment, params.id, api)
+    sendComment(rating, comment, params.id, getApi)
       .then(() => onRedirectFilm(`${ApiRoute.FILMS}/${params.id}`))
       .catch(() => {
         setData({
@@ -108,7 +104,7 @@ function FormReview({api, onRedirectFilm}) {
       {serverError && <div className="error">{ErrorsForm.SERVER}</div>}
 
       <div className="add-review__text">
-        <textarea className="add-review__textarea" name="review-text" value={comment} id="review-text" onChange={handleTextChange} placeholder="Review text"></textarea>
+        <textarea className="add-review__textarea" data-testid="textarea" name="review-text" value={comment} id="review-text" onChange={handleTextChange} placeholder="Review text"></textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit" disabled={!validate}>Post</button>
         </div>
@@ -119,12 +115,12 @@ function FormReview({api, onRedirectFilm}) {
 }
 
 FormReview.propTypes = {
-  api: PropTypes.func.isRequired,
+  getApi: PropTypes.func.isRequired,
   onRedirectFilm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  api: getApi(state),
+  getApi: getActionApi(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

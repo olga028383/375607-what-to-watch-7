@@ -13,9 +13,9 @@ import FilmInfo from './film-info/film-info';
 import NotFound from '../../not-found/not-found';
 
 import {fetchFilm} from '../../../store/api-actions';
-import {getApi} from '../../../store/application/selectors';
+import {getActionApi} from '../../../store/application/selectors';
 
-function FilmDetail({api}) {
+function FilmDetail({getApi}) {
   const params = useParams();
 
   const [data, setData] = useState({
@@ -35,7 +35,7 @@ function FilmDetail({api}) {
   };
 
   useEffect(() => {
-    fetchFilm(params.id, api)
+    fetchFilm(params.id, getApi)
       .then((filmData) => {
         setData({
           ...data,
@@ -49,6 +49,14 @@ function FilmDetail({api}) {
           isPage: false,
         });
       });
+
+    return () => {
+      setData({
+        film: {},
+        isPage: true,
+        isLoading: false,
+      });
+    }
   }, [params.id]);
 
   if (!isPage) {
@@ -107,11 +115,11 @@ function FilmDetail({api}) {
 }
 
 FilmDetail.propTypes = {
-  api: PropTypes.func.isRequired,
+  getApi: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  api: getApi(state),
+  getApi: getActionApi(state),
 });
 
 export {FilmDetail};

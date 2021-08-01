@@ -5,12 +5,12 @@ import {useHistory} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 import {addFavoriteFilm} from '../../store/api-actions';
 import {isCheckAuth} from '../../util';
-import {setFilmPromo} from '../../store/action';
+import {setFilmPromoAction} from '../../store/action';
 import filmProp from '../film/film.prop.js';
-import {getApi} from '../../store/application/selectors';
+import {getActionApi} from '../../store/application/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
-function FavoriteButton({film, isPromo = false, api, authorizationStatus, onSetFilmPromo, onSetFilm}) {
+function FavoriteButton({film, isPromo = false, getApi, authorizationStatus, setFilmPromo, setFilm}) {
   const {id, isFavorite} = film;
   const history = useHistory();
 
@@ -20,14 +20,14 @@ function FavoriteButton({film, isPromo = false, api, authorizationStatus, onSetF
       history.push(AppRoute.MY_LIST);
     }
 
-    addFavoriteFilm(id, isFavorite ? 0 : 1, api)
+    addFavoriteFilm(id, isFavorite ? 0 : 1, getApi)
       .then((data) => {
         if (isPromo) {
-          onSetFilmPromo(data);
+          setFilmPromo(data);
           return;
         }
 
-        onSetFilm(data);
+        setFilm(data);
       });
   };
 
@@ -36,11 +36,11 @@ function FavoriteButton({film, isPromo = false, api, authorizationStatus, onSetF
       {
         isFavorite
           ?
-          <svg viewBox="0 0 18 14" width="18" height="14">
+          <svg viewBox="0 0 18 14" width="18" height="14" data-testid="in-list">
             <use xlinkHref="#in-list"></use>
           </svg>
           :
-          <svg viewBox="0 0 19 20" width="19" height="20">
+          <svg viewBox="0 0 19 20" width="19" height="20" data-testid="add">
             <use xlinkHref="#add"></use>
           </svg>
       }
@@ -52,20 +52,20 @@ function FavoriteButton({film, isPromo = false, api, authorizationStatus, onSetF
 FavoriteButton.propTypes = {
   film: filmProp,
   isPromo: PropTypes.bool,
-  api: PropTypes.func.isRequired,
+  getApi: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  onSetFilmPromo: PropTypes.func.isRequired,
-  onSetFilm: PropTypes.func,
+  setFilmPromo: PropTypes.func.isRequired,
+  setFilm: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSetFilmPromo(promo) {
-    dispatch(setFilmPromo(promo));
+  setFilmPromo(promo) {
+    dispatch(setFilmPromoAction(promo));
   },
 });
 
 const mapStateToProps = (state) => ({
-  api: getApi(state),
+  getApi: getActionApi(state),
   authorizationStatus: getAuthorizationStatus(state),
 });
 

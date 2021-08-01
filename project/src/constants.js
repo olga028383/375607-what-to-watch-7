@@ -2,7 +2,7 @@ const AppRoute = {
   LOGIN: '/login',
   ROOT: '/',
   MY_LIST: '/mylist',
-  FILM_DETAIL: '/films/:id/(details|reviews)?',
+  FILM_DETAIL: '/films/:id',
   REVIEW: '/films/:id/review',
   PLAYER: '/player/:id',
 };
@@ -51,4 +51,24 @@ const ALL_GENRES = 'All genres';
 
 const MIN_TIME = 60;
 
-export {AppRoute, FilmsCount, COUNT_RATING, START_LOAD_VIDEO, TabsName, Ratings, ALL_GENRES, MIN_TIME, ApiRoute, AuthorizationStatus};
+const TEN = 10;
+
+const MIN_LENGTH_COMMENT = 50;
+
+const MAX_LENGTH_COMMENT = 400;
+
+export {
+  AppRoute,
+  FilmsCount,
+  COUNT_RATING,
+  START_LOAD_VIDEO,
+  TabsName,
+  Ratings,
+  ALL_GENRES,
+  MIN_TIME,
+  ApiRoute,
+  AuthorizationStatus,
+  TEN,
+  MIN_LENGTH_COMMENT,
+  MAX_LENGTH_COMMENT,
+};

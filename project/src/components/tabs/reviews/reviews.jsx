@@ -6,9 +6,9 @@ import {connect} from 'react-redux';
 import Review from '../../review/review';
 import Loading from '../../loading/loading';
 import {fetchComments} from '../../../store/api-actions';
-import {getApi} from '../../../store/application/selectors';
+import {getActionApi} from '../../../store/application/selectors';
 
-function Reviews({api}) {
+function Reviews({getApi}) {
   const params = useParams();
 
   const [data, setData] = useState({
@@ -20,7 +20,7 @@ function Reviews({api}) {
   const countComments = Math.ceil(comments.length / 2);
 
   useEffect(() => {
-    fetchComments(params.id, api)
+    fetchComments(params.id, getApi)
       .then((commentsData) => {
         setData({
           comments: commentsData,
@@ -52,11 +52,11 @@ function Reviews({api}) {
 
 
 Reviews.propTypes = {
-  api: PropTypes.func.isRequired,
+  getApi: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  api: getApi(state),
+  getApi: getActionApi(state),
 });
 
 export {Reviews};

@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import FilmList from '../film-list/film-list';
 import Loading from '../loading/loading';
 import {fetchFavoriteFilms} from '../../store/api-actions';
-import {getApi} from '../../store/application/selectors';
+import {getActionApi} from '../../store/application/selectors';
 
-function FilmLisFavorite({api}) {
+function FilmLisFavorite({getApi}) {
 
   const [data, setData] = useState({
     favorite: [],
@@ -17,7 +17,7 @@ function FilmLisFavorite({api}) {
   const {favorite, isLoading} = data;
 
   useEffect(() => {
-    fetchFavoriteFilms(api)
+    fetchFavoriteFilms(getApi)
       .then((favoriteData) => {
 
         setData({
@@ -46,11 +46,11 @@ function FilmLisFavorite({api}) {
 
 
 FilmLisFavorite.propTypes = {
-  api: PropTypes.func.isRequired,
+  getApi: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  api: getApi(state),
+  getApi: getActionApi(state),
 });
 
 export {FilmLisFavorite};
