@@ -30,10 +30,9 @@ describe('Component: PrivateRoute', () => {
     );
   });
 
-  it('should display film list private route', () => {
+  it('there must be a transition', () => {
 
     render(fakeApp);
-
     expect(screen.getByText(/My List/i)).toBeInTheDocument();
   });
 });

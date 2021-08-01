@@ -47,9 +47,10 @@ describe('Component: GenreItem', () => {
 
   it('should display genre item', () => {
 
-    render(fakeApp);
+    const {container} = render(fakeApp);
 
     expect(screen.getByText(/Comedy/i)).toBeInTheDocument();
     expect(screen.getByText(/All genres/i)).toBeInTheDocument();
+    expect(container.querySelector('.catalog__genres-item--active a').textContent).toBe(ALL_GENRES);
   });
 });

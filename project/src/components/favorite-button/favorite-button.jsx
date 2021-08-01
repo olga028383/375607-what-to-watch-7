@@ -17,7 +17,8 @@ function FavoriteButton({film, isPromo = false, getApi, authorizationStatus, set
   const buttonClickHandler = () => {
 
     if (!isCheckAuth(authorizationStatus)) {
-      history.push(AppRoute.MY_LIST);
+      history.push(AppRoute.LOGIN);
+      return;
     }
 
     addFavoriteFilm(id, isFavorite ? 0 : 1, getApi)

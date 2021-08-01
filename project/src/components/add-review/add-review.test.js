@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, act} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import {Router, Switch, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
@@ -8,6 +8,7 @@ import configureStore from 'redux-mock-store';
 import AddReview from './add-review';
 import {ALL_GENRES, ApiRoute, AppRoute, AuthorizationStatus} from '../../constants';
 import {sendComment} from '../../store/api-actions';
+
 jest.mock('../../store/api-actions');
 
 let fakeApp = null;
@@ -85,10 +86,9 @@ describe('Component: AddReview', () => {
 
   });
 
-  it('validation of sending input logic and the promise is resolve', () => {
+  it('validation of sending input logic and the promise is resolve', async () => {
     sendComment.mockReturnValue(Promise.resolve());
-
-    act(() => {render(fakeApp)});
+    render(fakeApp);
 
     userEvent.type(screen.getByTestId('textarea'), text);
     userEvent.click(screen.getByDisplayValue(1));
@@ -101,21 +101,18 @@ describe('Component: AddReview', () => {
 
   });
 
-  // it('validation of sending input logic and the promise is reject', () => {
-  //   history.push(AppRoute.REVIEW);
-  //   sendComment.mockReturnValue(Promise.reject());
-  //
-  //   act(() => {
-  //     render(fakeApp);
-  //   });
-  //
-  //   userEvent.type(screen.getByTestId('textarea'), text);
-  //   userEvent.click(screen.getByDisplayValue(1));
-  //
-  //   act(() => {
-  //     userEvent.click(screen.getByText(/Post/i));
-  //   });
-  //
-  //   expect(sendComment).toHaveBeenCalledTimes(1);
-  // });
+  it('validation of sending input logic and the promise is reject', async () => {
+    history.push(AppRoute.REVIEW);
+    sendComment.mockReturnValue(Promise.reject());
+    render(fakeApp);
+
+    userEvent.type(screen.getByTestId('textarea'), text);
+    userEvent.click(screen.getByDisplayValue(1));
+    userEvent.click(screen.getByText(/Post/i));
+
+    await waitFor(() => expect(sendComment).toHaveBeenCalledTimes(1));
+    expect(await screen.findByText(/Произошла ошибка отправки данных, пожалуйста, попробуйте отправить еще раз через некоторое время/i)).toBeInTheDocument();
+
+  });
+
 });

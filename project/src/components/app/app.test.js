@@ -165,4 +165,24 @@ describe('Application Routing', () => {
     expect(screen.getByText('404. Page not found')).toBeInTheDocument();
     expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
+
+  it('Returns a stub if no data is loaded', () => {
+    const createFakeStore = configureStore({});
+    store = createFakeStore({
+      USER: {authorizationStatus: AuthorizationStatus.AUTH, user: user},
+      DATA: {isDataLoaded: false, films: films, promo: film},
+      APPLICATION: {genre: ALL_GENRES, api: api},
+    });
+
+    fakeApp = (
+      <Provider store={store}>
+        <Router history={history}>
+          <App/>
+        </Router>
+      </Provider>
+    );
+
+    render(fakeApp);
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  });
 });

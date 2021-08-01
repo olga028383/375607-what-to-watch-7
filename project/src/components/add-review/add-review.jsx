@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
-
 import RatingField from './rating-field/rating-field.jsx';
 import {sendComment} from '../../store/api-actions';
 import {redirect} from '../../store/action';

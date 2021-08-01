@@ -9,7 +9,7 @@ import browserHistory from './browser-history';
 
 import {createApi} from './api';
 import {fetchFilms, fetchFilmPromo, checkAuth} from './store/api-actions';
-import {setApi, requireAuthorization, setFilms, setFilmPromo, loadData} from './store/action';
+import {setApi, requireAuthorization, setFilms, setFilmPromoAction, loadData} from './store/action';
 import {AuthorizationStatus} from './constants';
 import {redirect} from './store/middlewares/redirect';
 
@@ -34,7 +34,7 @@ Promise
   ])
   .then(([films, promoFilm]) => {
     store.dispatch(setFilms(films));
-    store.dispatch(setFilmPromo(promoFilm));
+    store.dispatch(setFilmPromoAction(promoFilm));
     store.dispatch(loadData());
   });
 
