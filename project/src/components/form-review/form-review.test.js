@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
-import AddReview from './add-review';
+import AddReview from './form-review';
 import {ALL_GENRES, ApiRoute, AppRoute, AuthorizationStatus} from '../../constants';
 import {sendComment} from '../../store/api-actions';
 
