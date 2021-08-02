@@ -1,11 +1,12 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
+import {Router, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
-import Home from './home';
-import {ALL_GENRES, AuthorizationStatus} from '../../../constants';
+import Review from './review';
+import {ALL_GENRES, AppRoute, AuthorizationStatus} from '../../../constants';
+import PrivateRouteTotal from '../../private-route/private-route-total/private-route-total';
 
 const film = {
   id: 1,
@@ -31,32 +32,44 @@ let fakeApp = null;
 let history = null;
 let store = null;
 
-describe('Component: Home', () => {
+describe('Component: Review', () => {
   beforeAll(() => {
     history = createMemoryHistory();
+    history.push('/films/1/review');
 
     const createFakeStore = configureStore({});
     store = createFakeStore({
-      USER: {authorizationStatus: AuthorizationStatus.AUTH,  user: {id: 1, email: 'katy@mail.ru', avatar: '', name: 'Katy', token: ''}},
-      DATA: {isDataLoaded: true, films: [], promo: film},
+      USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {id: 1, email: 'katy@mail.ru', avatar: '', name: 'Katy', token: ''}},
+      DATA: {isDataLoaded: true, films: [film], promo: {}},
       APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
 
     fakeApp = (
       <Provider store={store}>
         <Router history={history}>
-          <Home />
+          <Switch>
+            <PrivateRouteTotal exact path={AppRoute.REVIEW} render={() => <Review/>}/>
+          </Switch>
         </Router>
       </Provider>
     );
   });
 
-  it('should display page home', () => {
-
+  it('should display page review', () => {
     render(fakeApp);
 
-    expect(screen.getByText(/Comedy/i)).toBeInTheDocument();
-    expect(screen.getByText(/My List/i)).toBeInTheDocument();
-    expect(screen.getByText(/Play/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add review/i)).toBeInTheDocument();
+    expect(screen.getByText(/Post/i)).toBeInTheDocument();
+    expect(screen.getByText(/The Grand Budapest Hotel/i)).toBeInTheDocument();
   });
+
+  it('should display page review not found', () => {
+    history.push('/films/2/review');
+    render(fakeApp);
+
+    expect(screen.getByText('404. Page not found')).toBeInTheDocument();
+    expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
+  });
+
+
 });

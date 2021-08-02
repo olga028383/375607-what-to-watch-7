@@ -1,14 +1,12 @@
 import React from 'react';
-import MockAdapter from 'axios-mock-adapter';
-import {createApi} from '../../../api';
-import {render, screen, act} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import FilmDetail from './film-detail';
 import {fetchFilm} from '../../../store/api-actions';
-import {ALL_GENRES, AuthorizationStatus} from "../../../constants";
+import {ALL_GENRES, AuthorizationStatus} from '../../../constants';
 
 const film = {
   'id': 1,
@@ -29,18 +27,54 @@ const film = {
   'released': 2014,
   'is_favorite': false,
 };
+
 let fakeApp = null;
 let history = null;
 let store = null;
+
 jest.mock('../../../store/api-actions');
+
+jest.mock('../../film-list-similar/film-list-similar', () => {
+  function FilmListSimilar() {
+    return <>List similar</>;
+  }
+
+  return {
+    __esModule: true,
+    default: FilmListSimilar,
+  };
+});
+
+jest.mock('../../tabs/tabs', () => {
+  function Tabs() {
+    return <>Tabs</>;
+  }
+
+  return {
+    __esModule: true,
+    default: Tabs,
+  };
+});
+
+jest.mock('./film-info/film-info', () => {
+  function FilmInfo() {
+    return <>FilmInfo</>;
+  }
+
+  return {
+    __esModule: true,
+    default: FilmInfo,
+  };
+});
 
 describe('Component: FilmDetail', () => {
   beforeAll(() => {
     history = createMemoryHistory();
     history.push('/films/1');
+
     const createFakeStore = configureStore({});
     store = createFakeStore({
-      USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {}},
+      USER: {authorizationStatus: AuthorizationStatus.AUTH, user: {id: 1, email: 'katy@mail.ru', avatar: '', name: 'Katy', token: ''}},
       DATA: {isDataLoaded: true, films: [film], promo: {}},
       APPLICATION: {genre: ALL_GENRES, api: jest.fn()},
     });
@@ -71,7 +105,8 @@ describe('Component: FilmDetail', () => {
 
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
 
-    expect(await screen.findByText(/The Grand Budapest Hotel/i)).toBeInTheDocument();
-
+    expect(await screen.findByText(/List similar/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Tabs/i)).toBeInTheDocument();
+    expect(await screen.findByText(/FilmInfo/i)).toBeInTheDocument();
   });
 });

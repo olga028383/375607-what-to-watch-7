@@ -15,7 +15,7 @@ const TabsName = {
 
 const FilmsCount = {
   LIST: 19,
-  HOME: 4,
+  HOME: 8,
   SIMILAR: 4,
 };
 
@@ -70,5 +70,5 @@ export {
   AuthorizationStatus,
   TEN,
   MIN_LENGTH_COMMENT,
-  MAX_LENGTH_COMMENT,
+  MAX_LENGTH_COMMENT
 };

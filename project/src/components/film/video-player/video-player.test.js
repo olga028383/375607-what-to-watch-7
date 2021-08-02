@@ -1,6 +1,7 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import VideoPlayer from './video-player';
+
 const film = {
   id: 1,
   name: 'The Grand Budapest Hotel',
@@ -20,13 +21,19 @@ const film = {
   released: 2014,
   isFavorite: false,
 };
+
 describe('Component: VideoPlayer', () => {
   beforeAll(() => {
     window.HTMLMediaElement.prototype.play = jest.fn();
+    Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
+      set: jest.fn(),
+      get: jest.fn(),
+    });
   });
 
   it('should display video', () => {
     const {container} = render(<VideoPlayer film={film} isActive/>);
     expect(container.querySelector('video')).toBeInTheDocument();
   });
+
 });

@@ -56,7 +56,7 @@ function FilmDetail({getApi}) {
         isPage: true,
         isLoading: false,
       });
-    }
+    };
   }, [params.id]);
 
   if (!isPage) {

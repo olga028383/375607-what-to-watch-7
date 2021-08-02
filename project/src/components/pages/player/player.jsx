@@ -23,23 +23,21 @@ function Player({films}) {
   const progress = useRef();
   const toggler = useRef();
 
-  const film = films.filter((currentFilm) => currentFilm.id === Number(params.id));
-
-  if (film.length === 0) {
+  const film = films.filter((currentFilm) => currentFilm.id === Number(params.id))[0];
+  if (!film) {
     return (
       <NotFound/>
     );
   }
 
-  const {videoLink} = film[0];
+  const {videoLink} = film;
 
   const buttonPlayHandler = () => {
     setIsActive(true);
     player.current.play();
-
     if (player.current.currentTime === 0) {
+      player.current.addEventListener('loadedmetadata', canPlayHandler);
       setIsLoading(true);
-      player.current.addEventListener('canplay', canPlayHandler);
     }
   };
 
@@ -58,8 +56,8 @@ function Player({films}) {
   };
 
   const canPlayHandler = () => {
+    player.current.removeEventListener('loadedmetadata', canPlayHandler);
     setIsLoading(false);
-    player.current.removeEventListener('canplay', canPlayHandler);
   };
 
   const timerHandler = () => {
@@ -89,14 +87,14 @@ function Player({films}) {
           {
             isActive
               ?
-              <button type="button" className="player__play" onClick={buttonStopHandler}>
+              <button type="button" className="player__play" data-testid="pause" onClick={buttonStopHandler}>
                 <svg viewBox="0 0 14 21" width="14" height="21">
                   <use xlinkHref="#pause"></use>
                 </svg>
                 <span>Pause</span>
               </button>
               :
-              <button type="button" className="player__play" onClick={buttonPlayHandler}>
+              <button type="button" className="player__play" data-testid="play" onClick={buttonPlayHandler}>
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>
@@ -105,7 +103,7 @@ function Player({films}) {
           }
           <div className="player__name">Transpotting</div>
 
-          <button type="button" className="player__full-screen" onClick={fullScreenHandler}>
+          <button type="button" className="player__full-screen" data-testid="full-screen" onClick={fullScreenHandler}>
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>

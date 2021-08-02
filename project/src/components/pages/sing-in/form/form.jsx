@@ -65,11 +65,11 @@ function Form({onSubmit}) {
 
         <div className="sign-in__fields">
           <div className={`sign-in__field ${emailError && 'sign-in__field--error'}`}>
-            <input className="sign-in__input" type="text" placeholder="Email address" name="user-email" id="user-email" required value={email} onChange={handleEmailChange}/>
+            <input className="sign-in__input" data-testid="email" type="text" placeholder="Email address" name="user-email" id="user-email" required value={email} onChange={handleEmailChange}/>
             <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
           </div>
           <div className="sign-in__field">
-            <input className="sign-in__input" type="password" required placeholder="Password" name="user-password" id="user-password" value={password} onChange={handlePasswordChange}/>
+            <input className="sign-in__input" data-testid="password" type="password" required placeholder="Password" name="user-password" id="user-password" value={password} onChange={handlePasswordChange}/>
             <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
           </div>
         </div>
