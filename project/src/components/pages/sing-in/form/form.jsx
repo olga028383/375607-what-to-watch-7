@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import {login} from '../../../../store/api-actions';
 import {isValidateEmail} from '../../../../util';
 
-const ErrorMessages = {
+const ErrorMessage = {
+  passwordError: 'Password cannot be empty',
   emailError: 'Please enter a valid email address',
   formError: 'We can’t recognize this email and password combination. Please try again.',
 };
@@ -15,9 +16,11 @@ function Form({onSubmit}) {
     password: '',
     error: '',
     emailError: false,
+    passwordError: false,
+    disabled: false,
   });
 
-  const {email, password, error, emailError} = data;
+  const {email, password, error, emailError, passwordError, disabled} = data;
 
   const handleEmailChange = (evt) => {
     setData({
@@ -36,15 +39,30 @@ function Form({onSubmit}) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    if (!isValidateEmail(email)) {
+    if (!isValidateEmail(email) ) {
       setData({
         ...data,
         emailError: true,
-        error: ErrorMessages.emailError,
+        error: ErrorMessage.emailError,
       });
 
       return;
     }
+
+    if (password.length === 0) {
+      setData({
+        ...data,
+        passwordError: true,
+        error: ErrorMessage.passwordError,
+      });
+
+      return;
+    }
+
+    setData({
+      ...data,
+      disabled: true,
+    });
 
     onSubmit({
       login: email,
@@ -54,6 +72,10 @@ function Form({onSubmit}) {
     setData({
       email: '',
       password: '',
+      error: '',
+      emailError: false,
+      passwordError: false,
+      disabled: false,
     });
   };
 
@@ -65,16 +87,16 @@ function Form({onSubmit}) {
 
         <div className="sign-in__fields">
           <div className={`sign-in__field ${emailError && 'sign-in__field--error'}`}>
-            <input className="sign-in__input" data-testid="email" type="text" placeholder="Email address" name="user-email" id="user-email" required value={email} onChange={handleEmailChange}/>
+            <input className="sign-in__input" disabled={disabled} data-testid="email" type="text" placeholder="Email address" name="user-email" id="user-email" value={email} onChange={handleEmailChange}/>
             <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
           </div>
-          <div className="sign-in__field">
-            <input className="sign-in__input" data-testid="password" type="password" required placeholder="Password" name="user-password" id="user-password" value={password} onChange={handlePasswordChange}/>
+          <div className={`sign-in__field ${passwordError && 'sign-in__field--error'}`}>
+            <input className="sign-in__input" disabled={disabled} data-testid="password" type="password" placeholder="Password" name="user-password" id="user-password" value={password} onChange={handlePasswordChange}/>
             <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
           </div>
         </div>
         <div className="sign-in__submit">
-          <button className="sign-in__btn" type="submit">Sign in</button>
+          <button className="sign-in__btn" disabled={disabled} type="submit">Sign in</button>
         </div>
       </form>
     </div>

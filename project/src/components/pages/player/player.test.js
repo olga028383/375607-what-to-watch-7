@@ -1,5 +1,5 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Router, Switch, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
@@ -33,9 +33,15 @@ let store = null;
 
 describe('Component: Player', () => {
   beforeAll(() => {
-    window.HTMLMediaElement.prototype.play = jest.fn();
+    window.HTMLMediaElement.prototype.play = jest.fn(()=>{});
     window.HTMLMediaElement.prototype.pause = jest.fn();
     window.HTMLMediaElement.prototype.requestFullscreen = jest.fn();
+
+    Object.defineProperty(window.HTMLMediaElement.prototype, 'muted', {
+      set: jest.fn(),
+      get: jest.fn(),
+    });
+
     history = createMemoryHistory();
 
     const createFakeStore = configureStore({});
@@ -61,26 +67,9 @@ describe('Component: Player', () => {
     );
 
     expect(screen.getByText(/Toggler/i)).toBeInTheDocument();
-    expect(screen.getByText(/Play/i)).toBeInTheDocument();
+    expect(screen.getByText(/Pause/i)).toBeInTheDocument();
     expect(screen.getByText(/Transpotting/i)).toBeInTheDocument();
     expect(screen.getByText(/Full screen/i)).toBeInTheDocument();
-  });
-
-  it('should display page player not found', () => {
-    history.push('/player/2');
-
-    render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Switch>
-            <Route exact path={AppRoute.PLAYER} render={() => <Player/>}/>
-          </Switch>
-        </Router>
-      </Provider>,
-    );
-
-    expect(screen.getByText('404. Page not found')).toBeInTheDocument();
-    expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
 
   it('when you click on the exit button, a redirect to the previous page should occur', () => {
@@ -119,21 +108,6 @@ describe('Component: Player', () => {
     expect(document.fullscreenElement).not.toBe(null);
   });
 
-  it('by clicking on the button play should start playback', () => {
-    history.push('/player/1');
-    render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Route exact path={AppRoute.PLAYER} render={() => <Player/>}/>
-        </Router>
-      </Provider>,
-    );
-
-    expect(screen.queryByTestId('pause')).toBe(null);
-    userEvent.click(screen.getByTestId('play'));
-    expect(screen.getByTestId('pause')).toBeInTheDocument();
-  });
-
   it('by clicking on the button pause should start playback', () => {
     history.push('/player/1');
     render(
@@ -144,17 +118,14 @@ describe('Component: Player', () => {
       </Provider>,
     );
 
-    expect(screen.queryByTestId('pause')).toBe(null);
-    userEvent.click(screen.getByTestId('play'));
-    expect(screen.getByTestId('pause')).toBeInTheDocument();
     expect(screen.queryByTestId('play')).toBe(null);
     userEvent.click(screen.getByTestId('pause'));
     expect(screen.getByTestId('play')).toBeInTheDocument();
   });
 
-  it('shows the bootloader before starting playback', () => {
+  it('by clicking on the button play should start playback', () => {
     history.push('/player/1');
-    const {container} = render(
+    render(
       <Provider store={store}>
         <Router history={history}>
           <Route exact path={AppRoute.PLAYER} render={() => <Player/>}/>
@@ -162,9 +133,28 @@ describe('Component: Player', () => {
       </Provider>,
     );
 
-    fireEvent(container.querySelector('video'), new Event('canplay'));
-    expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId('play')).toBe(null);
+    userEvent.click(screen.getByTestId('pause'));
+    expect(screen.getByTestId('play')).toBeInTheDocument();
+    expect(screen.queryByTestId('pause')).toBe(null);
     userEvent.click(screen.getByTestId('play'));
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    expect(screen.getByTestId('pause')).toBeInTheDocument();
+  });
+
+  it('should display page player not found', () => {
+    history.push('/player/2');
+
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Switch>
+            <Route exact path={AppRoute.PLAYER} render={() => <Player/>}/>
+          </Switch>
+        </Router>
+      </Provider>,
+    );
+
+    expect(screen.getByText('404. Page not found')).toBeInTheDocument();
+    expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
 });

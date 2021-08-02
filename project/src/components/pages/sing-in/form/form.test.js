@@ -67,6 +67,7 @@ describe('Component: Form', () => {
     expect(screen.getByText(/Please enter a valid email address/i)).toBeInTheDocument();
 
     userEvent.type(screen.getByTestId('email'), 'test@mail.ru');
+    userEvent.type(screen.getByTestId('password'), 'password');
     userEvent.click(screen.getByText(/Sign in/i));
     expect(login).toBeCalled();
 

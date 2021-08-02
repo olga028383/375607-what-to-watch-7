@@ -26,6 +26,13 @@ function FilmListSimilar({getApi}) {
           isLoading: true,
         });
       });
+
+    return () => {
+      setData({
+        similar: [],
+        isLoading: false,
+      });
+    };
   }, [params.id]);
 
   if (!isLoading) {

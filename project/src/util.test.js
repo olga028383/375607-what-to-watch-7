@@ -8,7 +8,7 @@ import {
   showRatingText,
   checkLengthReview
 } from './util';
-import {ALL_GENRES, AuthorizationStatus, Ratings} from './constants';
+import {ALL_GENRES, AuthorizationStatus, Rating} from './constants';
 
 const films = [{
   id: 1,
@@ -88,10 +88,10 @@ describe('tests utility functions', () => {
   });
 
   it('Should display the user\'s rating', () => {
-    expect(showRatingText(2)).toBe(Ratings.BAD);
-    expect(showRatingText(4)).toBe(Ratings.NORMAL);
-    expect(showRatingText(6)).toBe(Ratings.GOOD);
-    expect(showRatingText(9)).toBe(Ratings.VERY_GOOD);
-    expect(showRatingText(15)).toBe(Ratings.AWESOME);
+    expect(showRatingText(2)).toBe(Rating.BAD);
+    expect(showRatingText(4)).toBe(Rating.NORMAL);
+    expect(showRatingText(6)).toBe(Rating.GOOD);
+    expect(showRatingText(9)).toBe(Rating.VERY_GOOD);
+    expect(showRatingText(15)).toBe(Rating.AWESOME);
   });
 });

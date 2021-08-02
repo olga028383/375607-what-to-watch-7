@@ -27,6 +27,13 @@ function Reviews({getApi}) {
           isLoading: true,
         });
       });
+
+    return () => {
+      setData({
+        comments: [],
+        isLoading: false,
+      });
+    };
   }, [params.id]);
 
   if (!isLoading) {
@@ -39,7 +46,7 @@ function Reviews({getApi}) {
     <div className="film-card__reviews film-card__row">
 
       <div className="film-card__reviews-col">
-        {comments.slice(0, countComments).map((comment, id) =>
+        {comments.slice(0, countComments).map((comment) =>
           <Review key={`${comment.id}-comment`} review={comment}/>)}
       </div>
 

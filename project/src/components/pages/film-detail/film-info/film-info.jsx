@@ -25,7 +25,7 @@ function FilmInfo({film, authorizationStatus, onSetFilm}) {
 
           <PlayButton filmId={id}/>
 
-          <FavoriteButton film={film} isFavorite={isFavorite} onSetFilm={onSetFilm}/>
+          <FavoriteButton film={film} isFavorite={isFavorite} setFilm={onSetFilm}/>
 
           {isCheckAuth(authorizationStatus) &&
           <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>}

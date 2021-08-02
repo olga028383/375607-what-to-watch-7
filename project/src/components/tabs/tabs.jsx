@@ -4,16 +4,16 @@ import Details from './details/details.jsx';
 import Reviews from './reviews/reviews.jsx';
 import TabItem from './tab-item/tab-item.jsx';
 
-import {TabsName} from '../../constants.js';
+import {TabName} from '../../constants.js';
 
 import filmProp from '../film/film.prop.js';
 
 const renderContentTab = (film, currentTab) => {
 
   switch (currentTab) {
-    case TabsName.REVIEWS:
+    case TabName.REVIEWS:
       return <Reviews/>;
-    case TabsName.DETAILS:
+    case TabName.DETAILS:
       return <Details film={film}/>;
     default:
       return <Overview film={film}/>;
@@ -22,7 +22,7 @@ const renderContentTab = (film, currentTab) => {
 };
 
 function Tabs({film}) {
-  const [currentTab, setCurrentTab] = useState(TabsName.OVERVIEW);
+  const [currentTab, setCurrentTab] = useState(TabName.OVERVIEW);
 
   const onClickTab = (evt) => {
     evt.preventDefault();
@@ -33,7 +33,7 @@ function Tabs({film}) {
     <React.Fragment>
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
-          {Object.values(TabsName).map((tab) => <TabItem key={tab} title={tab} currentTab={currentTab} onClickTab={onClickTab}/>)}
+          {Object.values(TabName).map((tab) => <TabItem key={tab} title={tab} currentTab={currentTab} onClickTab={onClickTab}/>)}
         </ul>
       </nav>
 

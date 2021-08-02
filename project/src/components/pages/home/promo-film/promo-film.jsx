@@ -38,7 +38,7 @@ function PromoFilm({promo}) {
             <div className="film-card__buttons">
               <PlayButton filmId={id}/>
 
-              <FavoriteButton film={promo} isPromo/>
+              <FavoriteButton film={promo} isPromo />
             </div>
           </div>
         </div>

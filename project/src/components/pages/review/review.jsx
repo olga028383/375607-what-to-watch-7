@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
-import FormReview from '../../add-review/add-review';
+import FormReview from '../../form-review/form-review';
 
 import filmProp from '../../film/film.prop.js';
 import Header from '../../header/header.jsx';

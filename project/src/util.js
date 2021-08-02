@@ -1,4 +1,4 @@
-import {MIN_TIME, ALL_GENRES, AuthorizationStatus, TEN, MIN_LENGTH_COMMENT, MAX_LENGTH_COMMENT, Ratings} from './constants';
+import {MIN_TIME, ALL_GENRES, AuthorizationStatus, TEN, Comment, Rating} from './constants';
 
 const getLengthTimeFormat = (numeric) => {
   if (!numeric) {
@@ -49,19 +49,19 @@ const isCheckAuth = (authorizationStatus) => authorizationStatus === Authorizati
 
 const isValidateEmail = (email) => /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/.test(email);
 
-const checkLengthReview = (comment) => comment.length > MIN_LENGTH_COMMENT && comment.length <= MAX_LENGTH_COMMENT;
+const checkLengthReview = (comment) => comment.length > Comment.MIN_LENGTH && comment.length <= Comment.MAX_LENGTH;
 
 const showRatingText = (rating) => {
   if (rating > 0 && rating < 3) {
-    return Ratings.BAD;
+    return Rating.BAD;
   } else if (rating >= 3 && rating < 5) {
-    return Ratings.NORMAL;
+    return Rating.NORMAL;
   } else if (rating >= 5 && rating < 8) {
-    return Ratings.GOOD;
+    return Rating.GOOD;
   } else if (rating >= 8 && rating < 10) {
-    return Ratings.VERY_GOOD;
+    return Rating.VERY_GOOD;
   } else {
-    return Ratings.AWESOME;
+    return Rating.AWESOME;
   }
 };
 

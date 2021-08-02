@@ -7,21 +7,21 @@ import MoreButton from '../more-button/more-button';
 import FilmList from '../film-list/film-list';
 
 import filmProp from '../film/film.prop.js';
-import {FilmsCount} from '../../constants.js';
+import {FilmCount} from '../../constants.js';
 import {getFilms} from '../../store/data/selectors';
 import {getGenre} from '../../store/application/selectors';
 import {getFilterFilms} from '../../util';
 
 function FilmListFiltered({films, genre}) {
-  const [countFilms, setCountFilms] = useState(FilmsCount.HOME);
+  const [countFilms, setCountFilms] = useState(FilmCount.HOME);
   const filmsFiltered = getFilterFilms(genre, films);
 
   const onClickButton = () => {
-    setCountFilms(countFilms + FilmsCount.HOME);
+    setCountFilms(countFilms + FilmCount.HOME);
   };
 
   const onClickGenre = useCallback(() => {
-    setCountFilms(FilmsCount.HOME);
+    setCountFilms(FilmCount.HOME);
   }, []);
 
   return (

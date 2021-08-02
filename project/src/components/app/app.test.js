@@ -68,6 +68,15 @@ describe('Application Routing', () => {
     history = createMemoryHistory();
     api = createApi(jest.fn());
 
+    window.HTMLMediaElement.prototype.play = jest.fn();
+    window.HTMLMediaElement.prototype.pause = jest.fn();
+    window.HTMLMediaElement.prototype.requestFullscreen = jest.fn();
+
+    Object.defineProperty(window.HTMLMediaElement.prototype, 'muted', {
+      set: jest.fn(),
+      get: jest.fn(),
+    });
+
     const createFakeStore = configureStore({});
     store = createFakeStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user: user},
@@ -155,7 +164,7 @@ describe('Application Routing', () => {
     expect(screen.getByText(/Transpotting/i)).toBeInTheDocument();
     expect(screen.getByText(/Exit/i)).toBeInTheDocument();
     expect(screen.getByText(/Full screen/i)).toBeInTheDocument();
-    expect(screen.getByText(/Play/i)).toBeInTheDocument();
+    expect(screen.getByText(/Pause/i)).toBeInTheDocument();
     expect(screen.getByText(/Toggler/i)).toBeInTheDocument();
   });
 

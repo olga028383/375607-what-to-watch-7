@@ -5,7 +5,7 @@ import Logo from '../logo/logo';
 function Header({className, children}) {
   return (
     <header className={className}>
-      <Logo/>
+      <Logo className="logo__link"/>
 
       {children}
     </header>

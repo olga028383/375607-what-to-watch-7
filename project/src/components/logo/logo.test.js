@@ -15,7 +15,7 @@ describe('Component: Logo', () => {
   it('should render correctly', () => {
     render(
       <Router history={history}>
-        <Logo />
+        <Logo className={'test'}/>
       </Router>);
 
     expect(screen.getAllByText(/W/i)).toHaveLength(2);
@@ -34,7 +34,7 @@ describe('Component: Logo', () => {
             <h1>This is main page</h1>
           </Route>
           <Route>
-            <Logo />
+            <Logo className={'test'}/>
           </Route>
         </Switch>
       </Router>);

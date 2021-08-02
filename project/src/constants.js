@@ -7,19 +7,19 @@ const AppRoute = {
   PLAYER: '/player/:id',
 };
 
-const TabsName = {
+const TabName = {
   OVERVIEW: 'Overview',
   DETAILS: 'Details',
   REVIEWS: 'Reviews',
 };
 
-const FilmsCount = {
+const FilmCount = {
   LIST: 19,
   HOME: 8,
   SIMILAR: 4,
 };
 
-const Ratings = {
+const Rating = {
   BAD: 'Bad',
   NORMAL: 'Normal',
   GOOD: 'Good',
@@ -43,6 +43,10 @@ const AuthorizationStatus = {
   UNKNOWN: 'UNKNOWN',
 };
 
+const Comment = {
+  MIN_LENGTH: 50,
+  MAX_LENGTH: 400,
+};
 const COUNT_RATING = 10;
 
 const START_LOAD_VIDEO = 1000;
@@ -53,22 +57,17 @@ const MIN_TIME = 60;
 
 const TEN = 10;
 
-const MIN_LENGTH_COMMENT = 50;
-
-const MAX_LENGTH_COMMENT = 400;
-
 export {
   AppRoute,
-  FilmsCount,
+  FilmCount,
   COUNT_RATING,
   START_LOAD_VIDEO,
-  TabsName,
-  Ratings,
+  TabName,
+  Rating,
   ALL_GENRES,
   MIN_TIME,
   ApiRoute,
   AuthorizationStatus,
   TEN,
-  MIN_LENGTH_COMMENT,
-  MAX_LENGTH_COMMENT
+  Comment
 };
