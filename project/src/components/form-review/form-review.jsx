@@ -48,6 +48,11 @@ function FormReview({getApi, onRedirectFilm}) {
       return;
     }
 
+    setData({
+      ...data,
+      validate: false,
+    });
+
     sendComment(rating, comment, params.id, getApi)
       .then(() => onRedirectFilm(`${ApiRoute.FILMS}/${params.id}`))
       .catch(() => {
